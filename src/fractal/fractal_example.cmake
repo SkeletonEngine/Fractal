@@ -1,0 +1,5 @@
+source_group("src" FILES src/example/main.cpp)
+add_executable("FractalBackend${FRACTAL_BACKEND_NAME}Example" src/example/main.cpp)
+target_compile_features("FractalBackend${FRACTAL_BACKEND_NAME}Example" PUBLIC cxx_std_20)
+target_link_libraries("FractalBackend${FRACTAL_BACKEND_NAME}Example" PRIVATE "FractalBackend${FRACTAL_BACKEND_NAME}")
+set_target_properties("FractalBackend${FRACTAL_BACKEND_NAME}Example" PROPERTIES FOLDER "Fractal/Examples")

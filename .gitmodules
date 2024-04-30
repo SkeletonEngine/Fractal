@@ -1,0 +1,3 @@
+[submodule "src/lib/volk"]
+	path = src/lib/volk
+	url = https://github.com/zeux/volk
