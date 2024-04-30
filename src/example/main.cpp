@@ -2,9 +2,9 @@
 
 #include <fractal/fractal.hpp>
 
-void Logger(Fractal::LoggerLevel level, const char* message) {
-  if (level >= Fractal::LoggerLevel::kTrace) {
-    printf("[%s] %s\n", Fractal::LoggerLevelStr(level), message);
+static void Logger(Fractal::LoggerLevel level, const char* message) {
+  if (level >= Fractal::LoggerLevel::kInfo) {
+    printf("[Fractal %s] %s\n", Fractal::LoggerLevelStr(level), message);
   }
 }
 
@@ -14,7 +14,7 @@ int main() {
   Fractal::WindowSurface surface {{
     .instance = &instance,
     .window_handle {
-      .nsview = nullptr
+      .hwnd = nullptr
     }
   }};
 }

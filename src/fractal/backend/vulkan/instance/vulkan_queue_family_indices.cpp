@@ -1,6 +1,8 @@
 #include "vulkan_queue_family_indices.hpp"
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
+#include <vector>
+
 #include <volk.h>
 
 namespace Fractal {

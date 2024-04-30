@@ -2,6 +2,7 @@
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
 #include <set>
+#include <vector>
 
 #include <volk.h>
 
@@ -30,7 +31,7 @@ static void ListDeviceExtensionSupport(VkPhysicalDevice device) {
   size_t supported_extension_count = 0;
 
   for (auto& ep : extensions) {
-    FL_LOG_TRACE("\t{0}", ep.extensionName);
+    FL_LOG_TRACE("  > {}", ep.extensionName);
   }
 }
 

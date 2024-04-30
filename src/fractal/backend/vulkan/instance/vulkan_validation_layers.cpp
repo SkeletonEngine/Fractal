@@ -3,6 +3,8 @@
 
 #ifdef FL_BUILD_DEBUG
 
+#include <vector>
+
 #include <volk.h>
 
 namespace Fractal {

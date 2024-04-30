@@ -26,6 +26,7 @@ constexpr const char* LoggerLevelStr(LoggerLevel level) {
     case LoggerLevel::kError: return "Error";
     case LoggerLevel::kFatal: return "Fatal";
     case LoggerLevel::kAll:   return "All";
+    default:                  return "Unknown";
   }
 }
 
@@ -47,10 +48,7 @@ template<typename... Args> void InvokeGlobalLoggerCallbackWithArgs(LoggerLevel l
 
 } // namespace Fractal::Internal
 
-#define FL_LOG_WITH_ARGS(level, fmt, ...) ::Fractal::Internal::InvokeGlobalLoggerCallbackWithArgs(level, fmt, __VA_ARGS__);
-#define FL_LOG_NO_ARGS(level, msg) ::Fractal::Internal::InvokeGlobalLoggerCallback(level, msg)
-#define FL_LOG_MACRO_CHOOSER(_1, _2, NAME, ...) NAME
-#define FL_LOG(level, ...) FL_LOG_MACRO_CHOOSER(__VA_ARGS__, FL_LOG_WITH_ARGS, FL_LOG_NO_ARGS)(level, __VA_ARGS__)
+#define FL_LOG(level, fmt, ...) ::Fractal::Internal::InvokeGlobalLoggerCallbackWithArgs(level, fmt, __VA_ARGS__);
 
 #define FL_LOG_TRACE(...) FL_LOG(LoggerLevel::kTrace, __VA_ARGS__)
 #define FL_LOG_DEBUG(...) FL_LOG(LoggerLevel::kDebug, __VA_ARGS__)
