@@ -9,8 +9,6 @@
 
 namespace Fractal {
 
-VkDebugUtilsMessengerEXT debug_messenger = VK_NULL_HANDLE;
-
 static const char* const kRequiredValidationLayers[] = {
   "VK_LAYER_KHRONOS_validation",
 };
@@ -21,16 +19,16 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL DebugCallback(
 
   switch (message_severity) {
     case VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT:
-      FL_LOG_TRACE("Validation layer: {0}", callback_data->pMessage);
+      FL_LOG_TRACE("Validation layer: {}", callback_data->pMessage);
       break;
     case VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT:
-      FL_LOG_INFO("Validation layer: {0}", callback_data->pMessage);
+      FL_LOG_INFO("Validation layer: {}", callback_data->pMessage);
       break;
     case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
-      FL_LOG_WARN("Validation layer: {0}", callback_data->pMessage);
+      FL_LOG_WARN("Validation layer: {}", callback_data->pMessage);
       break;
     case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
-      FL_LOG_ERROR("Validation layer: {0}", callback_data->pMessage);
+      FL_LOG_ERROR("Validation layer: {}", callback_data->pMessage);
       break;
     default: break;
   }
@@ -94,11 +92,13 @@ void PopulateDebugUtilsMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& d
   debug_messenger_info.pfnUserCallback = DebugCallback;
 }
 
-void CreateDebugMessenger(VkInstance instance, VkAllocationCallbacks* allocator) {
+VkDebugUtilsMessengerEXT CreateDebugMessenger(VkInstance instance, VkAllocationCallbacks* allocator) {
   VkDebugUtilsMessengerCreateInfoEXT debug_messenger_info { };
   PopulateDebugUtilsMessengerCreateInfo(debug_messenger_info);
 
+  VkDebugUtilsMessengerEXT debug_messenger;
   VK_CHECK(vkCreateDebugUtilsMessengerEXT(instance, &debug_messenger_info, allocator, &debug_messenger));
+  return debug_messenger;
 }
 
 void PopulateDeviceValidationLayers(VkDeviceCreateInfo& device_info) {

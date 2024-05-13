@@ -13,7 +13,7 @@ void ListValidationLayerSupport();
 bool CheckValidationLayerSupport();
 void PopulateValidationLayers(VkInstanceCreateInfo& instance_info);
 void PopulateDebugUtilsMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& debug_messenger_info);
-void CreateDebugMessenger(VkInstance instance, VkAllocationCallbacks* allocator);
+VkDebugUtilsMessengerEXT CreateDebugMessenger(VkInstance instance, VkAllocationCallbacks* allocator);
 void PopulateDeviceValidationLayers(VkDeviceCreateInfo& device_info);
 
 }
