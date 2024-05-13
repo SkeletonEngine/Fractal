@@ -48,14 +48,14 @@ template<typename... Args> void InvokeGlobalLoggerCallbackWithArgs(LoggerLevel l
 
 } // namespace Fractal::Internal
 
-#define FL_LOG(level, fmt, ...) ::Fractal::Internal::InvokeGlobalLoggerCallbackWithArgs(level, fmt, __VA_ARGS__);
+#define FL_LOG(level, fmt, ...) ::Fractal::Internal::InvokeGlobalLoggerCallbackWithArgs(level, fmt, ##__VA_ARGS__);
 
-#define FL_LOG_TRACE(...) FL_LOG(LoggerLevel::kTrace, __VA_ARGS__)
-#define FL_LOG_DEBUG(...) FL_LOG(LoggerLevel::kDebug, __VA_ARGS__)
-#define FL_LOG_INFO(...)  FL_LOG(LoggerLevel::kInfo,  __VA_ARGS__)
-#define FL_LOG_WARN(...)  FL_LOG(LoggerLevel::kWarn,  __VA_ARGS__)
-#define FL_LOG_ERROR(...) FL_LOG(LoggerLevel::kError, __VA_ARGS__)
-#define FL_LOG_FATAL(...) FL_LOG(LoggerLevel::kFatal, __VA_ARGS__)
+#define FL_LOG_TRACE(...) FL_LOG(LoggerLevel::kTrace, ##__VA_ARGS__)
+#define FL_LOG_DEBUG(...) FL_LOG(LoggerLevel::kDebug, ##__VA_ARGS__)
+#define FL_LOG_INFO(...)  FL_LOG(LoggerLevel::kInfo,  ##__VA_ARGS__)
+#define FL_LOG_WARN(...)  FL_LOG(LoggerLevel::kWarn,  ##__VA_ARGS__)
+#define FL_LOG_ERROR(...) FL_LOG(LoggerLevel::kError, ##__VA_ARGS__)
+#define FL_LOG_FATAL(...) FL_LOG(LoggerLevel::kFatal, ##__VA_ARGS__)
 
 #else // FL_BUILD_DEBUG
 
