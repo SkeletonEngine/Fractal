@@ -25,8 +25,10 @@ WindowSurface::WindowSurface(const WindowSurfaceCreateInfo& create_info) {
 }
 
 WindowSurface::~WindowSurface() {
+  if (data->surface) {
+    vkDestroySurfaceKHR(data->instance->instance, data->surface, data->instance->allocator);
+  }
   delete data;
-  
   FL_LOG_TRACE("Vulkan WindowSurface Destroyed");
 }
 

@@ -35,13 +35,22 @@ Instance::Instance(const InstanceCreateInfo& create_info) {
   volkLoadInstance(data->instance); // TODO: Either explicitly support multiple instances or don't
 
 #ifdef FL_BUILD_DEBUG
-  CreateDebugMessenger(data->instance, data->allocator);
+  data->debug_messenger = CreateDebugMessenger(data->instance, data->allocator);
 #endif
   
   FL_LOG_TRACE("Vulkan Instance Created");
 }
 
 Instance::~Instance() {
+  if (data->device) {
+    vkDestroyDevice(data->device, data->allocator);
+  }
+  if (data->debug_messenger) {
+    vkDestroyDebugUtilsMessengerEXT(data->instance, data->debug_messenger, data->allocator);
+  }
+  if (data->instance) {
+    vkDestroyInstance(data->instance, data->allocator);
+  }
   delete data;
   FL_LOG_TRACE("Vulkan Instance Destroyed");
 }

@@ -20,7 +20,7 @@ typedef VkResult (*PFN_vkCreateMetalSurfaceEXT)(VkInstance, const VkMetalSurface
 namespace Fractal {
 
 VkSurfaceKHR CreatePlatformWindowVkSurfaceKHR(InstanceData* instance, const WindowHandle& window_handle) {
-  FL_ASSERT(window_handle.nsview);
+  FL_ASSERT(window_handle);
   
   NSBundle* bundle = [NSBundle bundleWithPath:@"/System/Library/Frameworks/QuartzCore.framework"];
   if (!bundle) {
@@ -33,9 +33,6 @@ VkSurfaceKHR CreatePlatformWindowVkSurfaceKHR(InstanceData* instance, const Wind
     FL_LOG_ERROR("Cocoa: Failed to create layer for view");
     VK_ASSERT(VK_ERROR_EXTENSION_NOT_PRESENT);
   }
-  
-  [window_handle.nsview setLayer:layer];
-  [window_handle.nsview setWantsLayer:YES];
   
   PFN_vkCreateMetalSurfaceEXT vkCreateMetalSurfaceEXT = (PFN_vkCreateMetalSurfaceEXT)vkGetInstanceProcAddr(instance->instance, "vkCreateMetalSurfaceEXT");
   if (!vkCreateMetalSurfaceEXT) {

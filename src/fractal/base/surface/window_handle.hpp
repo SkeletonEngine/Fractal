@@ -10,17 +10,13 @@
 #endif
 
 namespace Fractal {
-
-struct WindowHandle {
   
 #ifdef FL_PLATFORM_WINDOWS
-  HWND hwnd = nullptr;
+  typedef HWND WindowHandle;
 #endif
   
 #ifdef FL_PLATFORM_MACOS
-  NsView nsview = nullptr;
+  typedef NsView WindowHandle;
 #endif
-  
-};
 
 }
