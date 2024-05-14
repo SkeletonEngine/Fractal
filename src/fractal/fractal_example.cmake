@@ -11,9 +11,18 @@ if (APPLE)
   source_group("src/platform/macos" FILES ${FRACTAL_SRC_EXAMPLE_PLATFORM_MACOS_FILES})
 endif()
 
+if (WIN32)
+  set(FRACTAL_SRC_EXAMPLE_PLATFORM_WINDOWS_FILES
+    src/example/platform/windows/windows_window.hpp
+    src/example/platform/windows/windows_window.cpp
+  )
+  source_group("src/platform/windows" FILES ${FRACTAL_SRC_EXAMPLE_PLATFORM_WINDOWS_FILES})
+endif()
+
 add_executable("FractalBackend${FRACTAL_BACKEND_NAME}Example" 
   ${FRACTAL_SRC_EXAMPLE_FILES}
   ${FRACTAL_SRC_EXAMPLE_PLATFORM_MACOS_FILES}
+  ${FRACTAL_SRC_EXAMPLE_PLATFORM_WINDOWS_FILES}
 )
 target_compile_features("FractalBackend${FRACTAL_BACKEND_NAME}Example" PUBLIC cxx_std_20)
 target_include_directories("FractalBackend${FRACTAL_BACKEND_NAME}Example" PUBLIC src)
