@@ -7,9 +7,9 @@ namespace Fractal {
 struct InstanceData;
 
 struct WindowSurfaceData {
-  InstanceData* instance;
+  InstanceData* instance = nullptr;
   
-  VkSurfaceKHR surface;
+  VkSurfaceKHR surface = VK_NULL_HANDLE;
 };
 
 }

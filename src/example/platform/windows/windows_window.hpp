@@ -15,12 +15,14 @@ public:
 
 private:
   HWND hwnd = nullptr;
+  bool is_open = true;
 
 public:
   inline HWND GetHwnd() const {
     return hwnd;
   };
 
+  void Close();
 };
 
 }
