@@ -15,13 +15,8 @@ static LRESULT CALLBACK FlWndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lpa
     window->Close();
     break;
   }
-
-  default: {
-    result = DefWindowProcW(hwnd, msg, wparam, lparam);
-    break;
   }
-  }
-  return result;
+  return DefWindowProcW(hwnd, msg, wparam, lparam);
 }
 
 Win32Window::Win32Window() {
