@@ -9,7 +9,7 @@
 #include "fractal/backend/vulkan/instance/vulkan_queue_family_indices.hpp"
 #include "fractal/backend/vulkan/instance/vulkan_validation_layers.hpp"
 #include "fractal/backend/vulkan/instance/vulkan_instance_data.hpp"
-#include "fractal/backend/vulkan/surface/vulkan_swapchain_support_details.hpp"
+#include "fractal/backend/vulkan/swapchain/vulkan_swapchain_support_details.hpp"
 
 namespace Fractal {
 
@@ -99,7 +99,7 @@ static int RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface) {
     score += (int)memory_props.memoryHeaps[i].size / 10000000;
   }
 
-  // Anisotropy is an optional but nice to have feature
+  // Anisotropy is an optional feature but nice to have
   VkPhysicalDeviceFeatures device_features { };
   vkGetPhysicalDeviceFeatures(device, &device_features);
   if (device_features.samplerAnisotropy) {
@@ -112,7 +112,6 @@ static int RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface) {
 static void ChoosePhysicalDevice(InstanceData* instance, VkSurfaceKHR surface) {
   uint32_t device_count = 0;
   vkEnumeratePhysicalDevices(instance->instance, &device_count, nullptr);
-
   FL_ASSERT(device_count > 0);
 
   std::vector<VkPhysicalDevice> devices(device_count);

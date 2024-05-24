@@ -37,10 +37,17 @@ set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES
   src/fractal/backend/vulkan/surface/vulkan_window_surface.cpp
   src/fractal/backend/vulkan/surface/vulkan_window_surface_data.hpp
   src/fractal/backend/vulkan/surface/vulkan_platform_create_window_surface.hpp
-  src/fractal/backend/vulkan/surface/vulkan_swapchain_support_details.hpp
-  src/fractal/backend/vulkan/surface/vulkan_swapchain_support_details.cpp
 )
 source_group("fractal/backend/vulkan/surface" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES})
+
+
+set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SWAPCHAIN_FILES
+  src/fractal/backend/vulkan/swapchain/vulkan_swapchain_support_details.hpp
+  src/fractal/backend/vulkan/swapchain/vulkan_swapchain_support_details.cpp
+  src/fractal/backend/vulkan/swapchain/vulkan_swapchain.hpp
+  src/fractal/backend/vulkan/swapchain/vulkan_swapchain.cpp
+)
+source_group("fractal/backend/vulkan/swapchain" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SWAPCHAIN_FILES})
 
 set(FRACTAL_BACKEND_VULKAN_FILES
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_PLATFORM_WINDOWS_FILES}
@@ -49,6 +56,7 @@ set(FRACTAL_BACKEND_VULKAN_FILES
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_COMMON_FILES}
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_INSTANCE_FILES}
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES}
+  ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SWAPCHAIN_FILES}
 )
 
 add_library(FractalBackendVulkan
