@@ -37,6 +37,8 @@ set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES
   src/fractal/backend/vulkan/surface/vulkan_window_surface.cpp
   src/fractal/backend/vulkan/surface/vulkan_window_surface_data.hpp
   src/fractal/backend/vulkan/surface/vulkan_platform_create_window_surface.hpp
+  src/fractal/backend/vulkan/surface/vulkan_swapchain_support_details.hpp
+  src/fractal/backend/vulkan/surface/vulkan_swapchain_support_details.cpp
 )
 source_group("fractal/backend/vulkan/surface" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES})
 

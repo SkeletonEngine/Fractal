@@ -9,6 +9,7 @@
 #include "fractal/backend/vulkan/instance/vulkan_queue_family_indices.hpp"
 #include "fractal/backend/vulkan/instance/vulkan_validation_layers.hpp"
 #include "fractal/backend/vulkan/instance/vulkan_instance_data.hpp"
+#include "fractal/backend/vulkan/surface/vulkan_swapchain_support_details.hpp"
 
 namespace Fractal {
 
@@ -67,8 +68,9 @@ static void PopulateDeviceExtensions(VkDeviceCreateInfo& device_info) {
 
 bool IsDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface) {
   VulkanQueueFamilyIndices indices(device, surface);
+  VulkanSwapchainSupportDetails swapchain_support(device, surface);
   
-  return CheckDeviceExtensionSupport(device) && indices.IsComplete();
+  return CheckDeviceExtensionSupport(device) && indices.IsComplete() && swapchain_support.IsSuitable();
 }
 
 static int RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface) {

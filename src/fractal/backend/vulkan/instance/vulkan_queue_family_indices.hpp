@@ -15,7 +15,7 @@ public:
 
 private:
   int graphics_family = -1;
-  int present_family = -1;
+  int present_family  = -1;
 };
 
 }
