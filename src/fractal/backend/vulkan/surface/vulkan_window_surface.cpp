@@ -1,6 +1,8 @@
 #include "fractal/base/surface/window_surface.hpp"
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
+#include <volk.h>
+
 #include "fractal/backend/vulkan/surface/vulkan_window_surface_data.hpp"
 #include "fractal/backend/vulkan/surface/vulkan_platform_create_window_surface.hpp"
 #include "fractal/backend/vulkan/instance/vulkan_device.hpp"

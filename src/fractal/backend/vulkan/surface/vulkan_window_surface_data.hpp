@@ -1,6 +1,5 @@
 #pragma once
-
-#include <volk.h>
+#include "fractal/backend/vulkan/common/vulkan_forward_declarations.hpp"
 
 namespace Fractal {
 

@@ -1,8 +1,6 @@
 #pragma once
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
-#include <volk.h>
-
 namespace Fractal {
 
 struct InstanceData {
