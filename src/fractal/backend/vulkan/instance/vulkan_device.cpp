@@ -2,6 +2,7 @@
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
 #include <set>
+#include <sstream>
 #include <vector>
 
 #include <volk.h>
@@ -20,18 +21,17 @@ static const char* const kRequiredDeviceExtensions[] = {
 };
 
 static void ListDeviceExtensionSupport(VkPhysicalDevice device) {
-  FL_LOG_TRACE("Listing supported Vulkan device extensions...");
-
   uint32_t extension_count = 0;
   vkEnumerateDeviceExtensionProperties(device, nullptr, &extension_count, nullptr);
-  std::vector<VkExtensionProperties> extensions(extension_count);
-  vkEnumerateDeviceExtensionProperties(device, nullptr, &extension_count, extensions.data());
+  std::vector<VkExtensionProperties> available_extensions(extension_count);
+  vkEnumerateDeviceExtensionProperties(device, nullptr, &extension_count, available_extensions.data());
 
-  size_t supported_extension_count = 0;
-
-  for (auto& ep : extensions) {
-    FL_LOG_TRACE("  > {}", ep.extensionName);
+  std::stringstream ss;
+  for (int i = 0; i < extension_count; ++i) {
+    ss << available_extensions[i].extensionName;
+    if (i < extension_count - 1) ss << ", ";
   }
+  FL_LOG_TRACE("Available device extensions: [{}]", ss.str());
 }
 
 static bool CheckDeviceExtensionSupport(VkPhysicalDevice device) {

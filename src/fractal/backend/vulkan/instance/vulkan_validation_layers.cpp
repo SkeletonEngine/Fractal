@@ -3,6 +3,7 @@
 
 #ifdef FL_BUILD_DEBUG
 
+#include <sstream>
 #include <vector>
 
 #include <volk.h>
@@ -37,16 +38,17 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL DebugCallback(
 }
 
 void Instance::ListValidationLayerSupport() {
-  FL_LOG_TRACE("Listing supported Vulkan validation layers...");
-
   uint32_t layer_count;
   vkEnumerateInstanceLayerProperties(&layer_count, nullptr);
   std::vector<VkLayerProperties> available_layers(layer_count);
   vkEnumerateInstanceLayerProperties(&layer_count, available_layers.data());
 
-  for (auto& props : available_layers) {
-    FL_LOG_TRACE("  > {}", props.layerName);
+  std::stringstream ss;
+  for (int i = 0; i < layer_count; ++i) {
+    ss << available_layers[i].layerName;
+    if (i < layer_count - 1) ss << ", ";
   }
+  FL_LOG_TRACE("Available validation layers: [{}]", ss.str());
 }
 
 bool Instance::CheckValidationLayerSupport() {

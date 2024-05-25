@@ -1,6 +1,7 @@
 #include "fractal/backend/vulkan/instance/vulkan_instance.hpp"
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
+#include <sstream>
 #include <vector>
 
 #include <volk.h>
@@ -28,16 +29,17 @@ static const char* const kRequiredInstanceExtensions[] = {
 };
 
 void Instance::ListInstanceExtensionSupport() {
-  FL_LOG_TRACE("Listing supported Vulkan instance extensions...");
-
   uint32_t extension_count = 0;
   vkEnumerateInstanceExtensionProperties(nullptr, &extension_count, nullptr);
   std::vector<VkExtensionProperties> available_extensions(extension_count);
   vkEnumerateInstanceExtensionProperties(nullptr, &extension_count, available_extensions.data());
 
-  for (auto& props : available_extensions) {
-    FL_LOG_TRACE("  > {}", props.extensionName);
+  std::stringstream ss;
+  for (int i = 0; i < extension_count; ++i) {
+    ss << available_extensions[i].extensionName;
+    if (i < extension_count - 1) ss << ", ";
   }
+  FL_LOG_TRACE("Available instance extensions: [{}]", ss.str());
 }
 
 bool Instance::CheckInstanceExtensionSupport() {
