@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <iostream>
 
-namespace Fractal {
+namespace Fractal::Internal {
 
 static void DefaultLoggerCallback(LoggerLevel level, const char* message) {
   auto t = std::time(nullptr);
@@ -21,10 +21,6 @@ static LoggerCallback global_logger_callback = DefaultLoggerCallback;
 void SetGlobalLoggerCallback(LoggerCallback logger) {
   global_logger_callback = logger;
 }
-
-} // namespace Fractal
-
-namespace Fractal::Internal {
 
 void InvokeGlobalLoggerCallback(LoggerLevel level, const char* message) {
   global_logger_callback(level, message);

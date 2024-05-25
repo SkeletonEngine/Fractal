@@ -1,0 +1,53 @@
+#pragma once
+#include "fractal/backend/vulkan/common/vulkan_base.hpp"
+
+namespace Fractal {
+
+struct InstanceCreateInfo {
+  LoggerCallback logger_callback = nullptr;
+};
+
+class Instance {
+public:
+  Instance(const InstanceCreateInfo& create_info = { });
+  ~Instance();
+
+private:
+  void ChoosePhysicalDevice(VkSurfaceKHR surface);
+  void CreateDevice(VkSurfaceKHR surface);
+  void CreateDebugMessenger();
+
+private:
+  static void PopulateInstanceCreateInfoEnabledExtensions(VkInstanceCreateInfo& instance_info);
+
+  static bool CheckDeviceSuitability(VkPhysicalDevice device, VkSurfaceKHR surface);
+  static int RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface);
+
+#ifdef FL_BUILD_DEBUG
+  static void ListInstanceExtensionSupport();
+  static bool CheckInstanceExtensionSupport();
+
+  static void ListValidationLayerSupport();
+  static bool CheckValidationLayerSupport();
+  static void PopulateInstanceCreateInfoValidationLayers(VkInstanceCreateInfo& instance_info);
+  static void PopulateDeviceCreateInfoValidationLayers(VkDeviceCreateInfo& device_info);
+  static void PopulateDebugUtilsMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& debug_messenger_info);
+#endif
+  
+private:
+  VkAllocationCallbacks* allocator         = VK_NULL_HANDLE;
+  VkInstance instance                      = VK_NULL_HANDLE;
+  VkPhysicalDevice physical_device         = VK_NULL_HANDLE;
+  VkDevice device                          = VK_NULL_HANDLE;
+  VkQueue graphics_queue                   = VK_NULL_HANDLE;
+  VkQueue present_queue                    = VK_NULL_HANDLE;
+
+#ifdef FL_BUILD_DEBUG
+  VkDebugUtilsMessengerEXT debug_messenger = VK_NULL_HANDLE;
+#endif
+
+private:
+  friend class WindowSurface;
+};
+
+}

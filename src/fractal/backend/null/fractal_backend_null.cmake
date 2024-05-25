@@ -21,6 +21,7 @@ add_library(FractalBackendNull
 target_compile_features(FractalBackendNull PUBLIC cxx_std_20)
 target_include_directories(FractalBackendNull PUBLIC src)
 set_target_properties(FractalBackendNull PROPERTIES FOLDER "Fractal/Null")
+target_compile_definitions(FractalBackendNull PUBLIC FRACTAL_BACKEND_NULL)
 
 if (PROJECT_IS_TOP_LEVEL)
   set(FRACTAL_BACKEND_NAME Null)

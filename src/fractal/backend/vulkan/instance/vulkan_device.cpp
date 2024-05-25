@@ -1,4 +1,4 @@
-#include "vulkan_device.hpp"
+#include "fractal/backend/vulkan/instance/vulkan_instance.hpp"
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
 #include <set>
@@ -6,10 +6,8 @@
 
 #include <volk.h>
 
-#include "fractal/backend/vulkan/instance/vulkan_queue_family_indices.hpp"
-#include "fractal/backend/vulkan/instance/vulkan_validation_layers.hpp"
-#include "fractal/backend/vulkan/instance/vulkan_instance_data.hpp"
-#include "fractal/backend/vulkan/swapchain/vulkan_swapchain_support_details.hpp"
+#include "fractal/backend/vulkan/helpers/vulkan_queue_family_indices.hpp"
+#include "fractal/backend/vulkan/helpers/vulkan_swapchain_support_details.hpp"
 
 namespace Fractal {
 
@@ -66,18 +64,18 @@ static void PopulateDeviceExtensions(VkDeviceCreateInfo& device_info) {
   device_info.enabledExtensionCount = FL_ARRAYSIZE(kRequiredDeviceExtensions);
 }
 
-bool IsDeviceSuitable(VkPhysicalDevice device, VkSurfaceKHR surface) {
+bool Instance::CheckDeviceSuitability(VkPhysicalDevice device, VkSurfaceKHR surface) {
   VulkanQueueFamilyIndices indices(device, surface);
   VulkanSwapchainSupportDetails swapchain_support(device, surface);
   
   return CheckDeviceExtensionSupport(device) && indices.IsComplete() && swapchain_support.IsSuitable();
 }
 
-static int RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface) {
+int Instance::RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface) {
   VkPhysicalDeviceProperties device_properties;
   vkGetPhysicalDeviceProperties(device, &device_properties);
 
-  if (!IsDeviceSuitable(device, surface)) {
+  if (!Instance::CheckDeviceSuitability(device, surface)) {
     return 0;
   }
 
@@ -109,36 +107,36 @@ static int RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface) {
   return score;
 }
 
-static void ChoosePhysicalDevice(InstanceData* instance, VkSurfaceKHR surface) {
+void Instance::ChoosePhysicalDevice(VkSurfaceKHR surface) {
   uint32_t device_count = 0;
-  vkEnumeratePhysicalDevices(instance->instance, &device_count, nullptr);
+  vkEnumeratePhysicalDevices(instance, &device_count, nullptr);
   FL_ASSERT(device_count > 0);
 
   std::vector<VkPhysicalDevice> devices(device_count);
-  vkEnumeratePhysicalDevices(instance->instance, &device_count, devices.data());
+  vkEnumeratePhysicalDevices(instance, &device_count, devices.data());
 
   int highest_score = 0;
   for (auto device : devices) {
     int current_score = RatePhysicalDevice(device, surface);
     if (current_score > highest_score) {
       highest_score = current_score;
-      instance->physical_device = device;
+      physical_device = device;
     }
   }
 
   FL_ASSERT(highest_score > 0);
 
   VkPhysicalDeviceProperties props { };
-  vkGetPhysicalDeviceProperties(instance->physical_device, &props);
+  vkGetPhysicalDeviceProperties(physical_device, &props);
   FL_LOG_INFO("Vulkan Device: {}", props.deviceName);
 }
 
-void CreateDevice(InstanceData* instance, VkSurfaceKHR surface) {
-  ChoosePhysicalDevice(instance, surface);
+void Instance::CreateDevice(VkSurfaceKHR surface) {
+  ChoosePhysicalDevice(surface);
 
   VkPhysicalDeviceFeatures device_features { };
 
-  VulkanQueueFamilyIndices indices(instance->physical_device, surface);
+  VulkanQueueFamilyIndices indices(physical_device, surface);
   std::vector<VkDeviceQueueCreateInfo> queue_create_infos;
   std::set<int> unique_queue_families = { indices.GetGraphicsFamily(), indices.GetPresentFamily() };
   float queue_priority = 1.0f;
@@ -157,15 +155,15 @@ void CreateDevice(InstanceData* instance, VkSurfaceKHR surface) {
   
   PopulateDeviceExtensions(device_info);
 #ifdef FL_BUILD_DEBUG
-  PopulateDeviceValidationLayers(device_info);
+  Instance::PopulateDeviceCreateInfoValidationLayers(device_info);
 #endif
 
-  VK_CHECK(vkCreateDevice(instance->physical_device, &device_info, instance->allocator, &instance->device));
-  vkGetDeviceQueue(instance->device, indices.GetGraphicsFamily(), 0, &instance->graphics_queue);
-  vkGetDeviceQueue(instance->device, indices.GetPresentFamily(),  0, &instance->present_queue);
+  VK_CHECK(vkCreateDevice(physical_device, &device_info, allocator, &device));
+  vkGetDeviceQueue(device, indices.GetGraphicsFamily(), 0, &graphics_queue);
+  vkGetDeviceQueue(device, indices.GetPresentFamily(),  0, &present_queue);
   
   FL_LOG_TRACE("Vulkan Device created");
-  FL_DEBUG_ONLY(ListDeviceExtensionSupport(instance->physical_device));
+  FL_DEBUG_ONLY(ListDeviceExtensionSupport(physical_device));
 }
 
 }

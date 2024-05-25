@@ -1,4 +1,4 @@
-#include "vulkan_validation_layers.hpp"
+#include "fractal/backend/vulkan/instance/vulkan_instance.hpp"
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
 #ifdef FL_BUILD_DEBUG
@@ -36,7 +36,7 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL DebugCallback(
   return VK_FALSE;
 }
 
-void ListValidationLayerSupport() {
+void Instance::ListValidationLayerSupport() {
   FL_LOG_TRACE("Listing supported Vulkan validation layers...");
 
   uint32_t layer_count;
@@ -49,7 +49,7 @@ void ListValidationLayerSupport() {
   }
 }
 
-bool CheckValidationLayerSupport() {
+bool Instance::CheckValidationLayerSupport() {
   uint32_t layer_count = 0;
   vkEnumerateInstanceLayerProperties(&layer_count, nullptr);
   std::vector<VkLayerProperties> available_layers(layer_count);
@@ -74,12 +74,12 @@ bool CheckValidationLayerSupport() {
   return true;
 }
 
-void PopulateValidationLayers(VkInstanceCreateInfo& instance_info) {
+void Instance::PopulateInstanceCreateInfoValidationLayers(VkInstanceCreateInfo& instance_info) {
   instance_info.enabledLayerCount = FL_ARRAYSIZE(kRequiredValidationLayers);
   instance_info.ppEnabledLayerNames = kRequiredValidationLayers;
 }
 
-void PopulateDebugUtilsMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& debug_messenger_info) {
+void Instance::PopulateDebugUtilsMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& debug_messenger_info) {
   debug_messenger_info.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
   debug_messenger_info.messageSeverity
     = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT 
@@ -92,16 +92,13 @@ void PopulateDebugUtilsMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& d
   debug_messenger_info.pfnUserCallback = DebugCallback;
 }
 
-VkDebugUtilsMessengerEXT CreateDebugMessenger(VkInstance instance, VkAllocationCallbacks* allocator) {
+void Instance::CreateDebugMessenger() {
   VkDebugUtilsMessengerCreateInfoEXT debug_messenger_info { };
   PopulateDebugUtilsMessengerCreateInfo(debug_messenger_info);
-
-  VkDebugUtilsMessengerEXT debug_messenger;
   VK_CHECK(vkCreateDebugUtilsMessengerEXT(instance, &debug_messenger_info, allocator, &debug_messenger));
-  return debug_messenger;
 }
 
-void PopulateDeviceValidationLayers(VkDeviceCreateInfo& device_info) {
+void Instance::PopulateDeviceCreateInfoValidationLayers(VkDeviceCreateInfo& device_info) {
   device_info.enabledLayerCount = FL_ARRAYSIZE(kRequiredValidationLayers);
   device_info.ppEnabledLayerNames = kRequiredValidationLayers;
 }

@@ -9,9 +9,9 @@
   #include "example/platform/windows/windows_window.hpp"
 #endif
 
-static void Logger(Fractal::LoggerLevel level, const char* message) {
+static void LoggerFunc(Fractal::LoggerLevel level, const char* message) {
   if (level >= Fractal::LoggerLevel::kTrace) {
-    printf("[Fractal %s] %s\n", Fractal::LoggerLevelStr(level), message);
+    printf("{level : \"%s\", message: \"%s\" }\n", Fractal::LoggerLevelStr(level), message);
   }
 }
 
@@ -23,8 +23,9 @@ int main() {
   Fractal::Example::Win32Window window;
 #endif
   
-  Fractal::SetGlobalLoggerCallback(Logger);
-  Fractal::Instance instance;
+  Fractal::Instance instance {{
+    .logger_callback = LoggerFunc,
+  }};
   Fractal::WindowSurface surface {{
     .instance = &instance,
 

@@ -1,16 +1,15 @@
-#include "fractal/base/instance/instance.hpp"
+#include "fractal/backend/vulkan/instance/vulkan_instance.hpp"
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
 #include <volk.h>
 
-#include "fractal/backend/vulkan/instance/vulkan_instance_data.hpp"
-#include "fractal/backend/vulkan/instance/vulkan_instance_extensions.hpp"
-#include "fractal/backend/vulkan/instance/vulkan_validation_layers.hpp"
-
 namespace Fractal {
 
 Instance::Instance(const InstanceCreateInfo& create_info) {
-  data = new InstanceData();
+  if (create_info.logger_callback) {
+    Internal::SetGlobalLoggerCallback(create_info.logger_callback);
+  }
+
   VK_CHECK(volkInitialize());
   
   FL_DEBUG_ONLY(ListValidationLayerSupport());
@@ -23,32 +22,31 @@ Instance::Instance(const InstanceCreateInfo& create_info) {
 
   VkInstanceCreateInfo instance_info { VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO };
 #ifdef FL_BUILD_DEBUG
-  PopulateValidationLayers(instance_info);
+  PopulateInstanceCreateInfoValidationLayers(instance_info);
   VkDebugUtilsMessengerCreateInfoEXT debug_messenger_info { };
   PopulateDebugUtilsMessengerCreateInfo(debug_messenger_info);
   instance_info.pNext = &debug_messenger_info;
 #endif
   instance_info.pApplicationInfo = &app_info;
-  PopulateInstanceExtensions(instance_info);
+  PopulateInstanceCreateInfoEnabledExtensions(instance_info);
   
-  VK_CHECK(vkCreateInstance(&instance_info, data->allocator, &data->instance));
-  volkLoadInstance(data->instance); // TODO: Either explicitly support multiple instances or don't
+  VK_CHECK(vkCreateInstance(&instance_info, allocator, &instance));
+  volkLoadInstance(instance); // TODO: Either explicitly support multiple instances or don't
 
 #ifdef FL_BUILD_DEBUG
-  data->debug_messenger = CreateDebugMessenger(data->instance, data->allocator);
-  FL_ASSERT(data->debug_messenger);
+  CreateDebugMessenger();
+  FL_ASSERT(debug_messenger);
 #endif
   
   FL_LOG_TRACE("Vulkan Instance Created");
 }
 
 Instance::~Instance() {
-  if (data->device) {
-    vkDestroyDevice(data->device, data->allocator);
+  if (device) {
+    vkDestroyDevice(device, allocator);
   }
-  FL_DEBUG_ONLY(vkDestroyDebugUtilsMessengerEXT(data->instance, data->debug_messenger, data->allocator));
-  vkDestroyInstance(data->instance, data->allocator);
-  delete data;
+  FL_DEBUG_ONLY(vkDestroyDebugUtilsMessengerEXT(instance, debug_messenger, allocator));
+  vkDestroyInstance(instance, allocator);
   FL_LOG_TRACE("Vulkan Instance Destroyed");
 }
 

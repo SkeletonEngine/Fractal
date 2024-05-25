@@ -26,13 +26,8 @@ set(FRACTAL_SRC_FRACTAL_BASE_COMMON_FILES
 )
 source_group("fractal/base/common" FILES ${FRACTAL_SRC_FRACTAL_BASE_COMMON_FILES})
 
-set(FRACTAL_SRC_FRACTAL_BASE_INSTANCE_FILES
-  src/fractal/base/instance/instance.hpp
-)
-source_group("fractal/base/instance" FILES ${FRACTAL_SRC_FRACTAL_BASE_INSTANCE_FILES})
-
 set(FRACTAL_SRC_FRACTAL_BASE_SURFACE_FILES
-  src/fractal/base/surface/window_surface.hpp
+  src/fractal/base/surface/window_handle.hpp
 )
 source_group("fractal/base/surface" FILES ${FRACTAL_SRC_FRACTAL_BASE_SURFACE_FILES})
 
@@ -43,6 +38,5 @@ set(FRACTAL_BASE_FILES
   ${FRACTAL_SRC_FRACTAL_BASE_PLATFORM_MACOS_FILES}
 
   ${FRACTAL_SRC_FRACTAL_BASE_COMMON_FILES}
-  ${FRACTAL_SRC_FRACTAL_BASE_INSTANCE_FILES}
   ${FRACTAL_SRC_FRACTAL_BASE_SURFACE_FILES}
 )

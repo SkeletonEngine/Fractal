@@ -1,4 +1,4 @@
-#include "vulkan_instance_extensions.hpp"
+#include "fractal/backend/vulkan/instance/vulkan_instance.hpp"
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
 #include <vector>
@@ -27,7 +27,7 @@ static const char* const kRequiredInstanceExtensions[] = {
 
 };
 
-void ListInstanceExtensionSupport() {
+void Instance::ListInstanceExtensionSupport() {
   FL_LOG_TRACE("Listing supported Vulkan instance extensions...");
 
   uint32_t extension_count = 0;
@@ -40,7 +40,7 @@ void ListInstanceExtensionSupport() {
   }
 }
 
-bool CheckInstanceExtensionSupport() {
+bool Instance::CheckInstanceExtensionSupport() {
   uint32_t extension_count = 0;
   vkEnumerateInstanceExtensionProperties(nullptr, &extension_count, nullptr);
   std::vector<VkExtensionProperties> available_extensions(extension_count);
@@ -65,7 +65,7 @@ bool CheckInstanceExtensionSupport() {
   return true;
 }
 
-void PopulateInstanceExtensions(VkInstanceCreateInfo& instance_info) {
+void Instance::PopulateInstanceCreateInfoEnabledExtensions(VkInstanceCreateInfo& instance_info) {
   instance_info.enabledExtensionCount = FL_ARRAYSIZE(kRequiredInstanceExtensions);
   instance_info.ppEnabledExtensionNames = kRequiredInstanceExtensions;
     

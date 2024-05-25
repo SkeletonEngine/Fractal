@@ -19,31 +19,31 @@ set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_COMMON_FILES
 )
 source_group("fractal/backend/vulkan/common" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_COMMON_FILES})
 
+set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_HELPERS_FILES
+  src/fractal/backend/vulkan/helpers/vulkan_queue_family_indices.hpp
+  src/fractal/backend/vulkan/helpers/vulkan_queue_family_indices.cpp
+  src/fractal/backend/vulkan/helpers/vulkan_swapchain_support_details.hpp
+  src/fractal/backend/vulkan/helpers/vulkan_swapchain_support_details.cpp
+)
+source_group("fractal/backend/vulkan/helpers" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_HELPERS_FILES})
+
 set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_INSTANCE_FILES
+  src/fractal/backend/vulkan/instance/vulkan_instance.hpp
   src/fractal/backend/vulkan/instance/vulkan_instance.cpp
-  src/fractal/backend/vulkan/instance/vulkan_instance_data.hpp
-  src/fractal/backend/vulkan/instance/vulkan_instance_extensions.hpp
   src/fractal/backend/vulkan/instance/vulkan_instance_extensions.cpp
-  src/fractal/backend/vulkan/instance/vulkan_validation_layers.hpp
   src/fractal/backend/vulkan/instance/vulkan_validation_layers.cpp
-  src/fractal/backend/vulkan/instance/vulkan_queue_family_indices.hpp
-  src/fractal/backend/vulkan/instance/vulkan_queue_family_indices.cpp
-  src/fractal/backend/vulkan/instance/vulkan_device.hpp
   src/fractal/backend/vulkan/instance/vulkan_device.cpp
 )
 source_group("fractal/backend/vulkan/instance" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_INSTANCE_FILES})
 
 set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES
+  src/fractal/backend/vulkan/surface/vulkan_window_surface.hpp
   src/fractal/backend/vulkan/surface/vulkan_window_surface.cpp
-  src/fractal/backend/vulkan/surface/vulkan_window_surface_data.hpp
-  src/fractal/backend/vulkan/surface/vulkan_platform_create_window_surface.hpp
 )
 source_group("fractal/backend/vulkan/surface" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES})
 
 
 set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SWAPCHAIN_FILES
-  src/fractal/backend/vulkan/swapchain/vulkan_swapchain_support_details.hpp
-  src/fractal/backend/vulkan/swapchain/vulkan_swapchain_support_details.cpp
   src/fractal/backend/vulkan/swapchain/vulkan_swapchain.hpp
   src/fractal/backend/vulkan/swapchain/vulkan_swapchain.cpp
 )
@@ -54,6 +54,7 @@ set(FRACTAL_BACKEND_VULKAN_FILES
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_PLATFORM_MACOS_FILES}
 
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_COMMON_FILES}
+  ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_HELPERS_FILES}
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_INSTANCE_FILES}
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES}
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SWAPCHAIN_FILES}
@@ -66,6 +67,7 @@ add_library(FractalBackendVulkan
 target_compile_features(FractalBackendVulkan PUBLIC cxx_std_20)
 target_include_directories(FractalBackendVulkan PUBLIC src)
 set_target_properties(FractalBackendVulkan PROPERTIES FOLDER "Fractal/Vulkan")
+target_compile_definitions(FractalBackendVulkan PUBLIC FRACTAL_BACKEND_VULKAN)
 
 if (APPLE)
   target_link_libraries(FractalBackendVulkan PRIVATE "-framework Cocoa")
@@ -76,7 +78,7 @@ if(WIN32)
 endif()
 add_subdirectory(src/lib/volk)
 set_target_properties(volk PROPERTIES FOLDER "Fractal/Vulkan")
-target_link_libraries(FractalBackendVulkan PRIVATE volk)
+target_link_libraries(FractalBackendVulkan PUBLIC volk)
 
 if (PROJECT_IS_TOP_LEVEL)
   set(FRACTAL_BACKEND_NAME Vulkan)

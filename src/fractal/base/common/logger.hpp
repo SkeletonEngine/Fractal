@@ -32,13 +32,13 @@ constexpr const char* LoggerLevelStr(LoggerLevel level) {
 
 typedef void (*LoggerCallback)(LoggerLevel level, const char* message);
 
-void SetGlobalLoggerCallback(LoggerCallback logger);
-
 } // namespace Fractal
 
 #ifdef FL_BUILD_DEBUG
 
 namespace Fractal::Internal {
+
+void SetGlobalLoggerCallback(LoggerCallback logger);
 
 void InvokeGlobalLoggerCallback(LoggerLevel level, const char* message);
 
