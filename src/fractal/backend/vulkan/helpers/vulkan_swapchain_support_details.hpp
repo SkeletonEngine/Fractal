@@ -11,6 +11,8 @@ public:
 
 public:
   bool IsSuitable() const;
+  VkSurfaceFormatKHR ChooseSwapchainSurfaceFormat() const;
+  VkPresentModeKHR ChooseSwapchainPresentMode() const;
 
 private:
     VkSurfaceCapabilitiesKHR capabilities;
