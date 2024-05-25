@@ -1,10 +1,11 @@
 set(FRACTAL_SRC_FRACTAL_BACKEND_NULL_INSTANCE_FILES
-  src/fractal/backend/null/instance/null_instance_data.hpp
+  src/fractal/backend/null/instance/null_instance.hpp
   src/fractal/backend/null/instance/null_instance.cpp
 )
 source_group("fractal/backend/null/instance" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_NULL_INSTANCE_FILES})
 
 set(FRACTAL_SRC_FRACTAL_BACKEND_NULL_SURFACE_FILES
+  src/fractal/backend/null/surface/null_window_surface.hpp
   src/fractal/backend/null/surface/null_window_surface.cpp
 )
 source_group("fractal/backend/null/surface" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_NULL_SURFACE_FILES})

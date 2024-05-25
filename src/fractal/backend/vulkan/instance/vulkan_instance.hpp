@@ -1,11 +1,9 @@
 #pragma once
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
-namespace Fractal {
+#include "fractal/base/instance/instance_create_info.hpp"
 
-struct InstanceCreateInfo {
-  LoggerCallback logger_callback = nullptr;
-};
+namespace Fractal {
 
 class Instance {
 public:

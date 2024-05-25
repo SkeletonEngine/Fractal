@@ -1,16 +1,12 @@
 #pragma once
-#include "fractal/base/common/base.hpp"
+#include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
 #include "fractal/base/surface/window_handle.hpp"
+#include "fractal/base/surface/window_surface_create_info.hpp"
 #include "fractal/backend/vulkan/instance/vulkan_instance.hpp"
 #include "fractal/backend/vulkan/swapchain/vulkan_swapchain.hpp"
 
 namespace Fractal {
-
-struct WindowSurfaceCreateInfo {
-  Instance* instance;
-  WindowHandle window_handle;
-};
 
 class WindowSurface {
 public:
