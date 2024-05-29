@@ -5,10 +5,8 @@ namespace Fractal {
 
 class Swapchain {
 public:
-  Swapchain();
-
-private:
   void CreateSwapchain();
+  void DestroySwapchain();
 };
 
 }

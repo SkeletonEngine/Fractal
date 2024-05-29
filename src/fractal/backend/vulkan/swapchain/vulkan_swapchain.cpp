@@ -3,10 +3,10 @@
 
 namespace Fractal {
 
-Swapchain::Swapchain() {
+void Swapchain::CreateSwapchain() {
 }
 
-void Swapchain::CreateSwapchain() {
+void Swapchain::DestroySwapchain() {
 }
 
 }

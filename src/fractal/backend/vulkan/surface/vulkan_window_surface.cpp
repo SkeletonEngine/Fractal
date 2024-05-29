@@ -16,20 +16,20 @@ WindowSurface::WindowSurface(const WindowSurfaceCreateInfo& create_info) {
 
   // TODO: For now we only support one GPU... This is an edge case that may be worth revisiting
   if (!create_info.instance->device) {
-    create_info.instance->CreateDevice(surface);
+    create_info.instance->CreateDevice(surface, create_info.window_handle);
   }
   else {
-    FL_LOG_WARN("Creating more window surfaces after the first is not guaranteed to work...");
-    FL_ASSERT(Instance::CheckDeviceSuitability(create_info.instance->physical_device, surface));
+    FL_LOG_WARN("Creating more window surfaces after the first will currently only work if all windows are compatible with the same device. Proceed with caution.");
+    FL_ASSERT(Instance::CheckDeviceSuitability(create_info.instance->physical_device, surface, create_info.window_handle));
   }
-
-  swapchain = new Swapchain();
+  
+  swapchain.CreateSwapchain();
   
   FL_LOG_TRACE("Vulkan WindowSurface Created");
 }
 
 WindowSurface::~WindowSurface() {
-  delete swapchain;
+  swapchain.DestroySwapchain();
   vkDestroySurfaceKHR(instance, surface, allocator);
   FL_LOG_TRACE("Vulkan WindowSurface Destroyed");
 }

@@ -1,10 +1,16 @@
 #include "vulkan_swapchain_support_details.hpp"
 
+#include <algorithm>
+#include <cstdint>
+#include <limits>
+
 #include <volk.h>
+
+#include "fractal/base/platform/window_handle.hpp"
 
 namespace Fractal {
 
-VulkanSwapchainSupportDetails::VulkanSwapchainSupportDetails(VkPhysicalDevice device, VkSurfaceKHR surface) {
+VulkanSwapchainSupportDetails::VulkanSwapchainSupportDetails(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window) {
   vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &capabilities);
 
   vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &format_count, nullptr);
@@ -18,6 +24,10 @@ VulkanSwapchainSupportDetails::VulkanSwapchainSupportDetails(VkPhysicalDevice de
       present_modes = new VkPresentModeKHR[present_mode_count];
       vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &present_mode_count, present_modes);
   }
+  
+  ChooseSwapchainSurfaceFormat();
+  ChooseSwapchainPresentMode();
+  ChooseSwapExtent(window);
 }
 
 VulkanSwapchainSupportDetails::~VulkanSwapchainSupportDetails() {
@@ -47,6 +57,24 @@ VkPresentModeKHR VulkanSwapchainSupportDetails::ChooseSwapchainPresentMode() con
     }
   }
   return VK_PRESENT_MODE_FIFO_KHR;
+}
+
+VkExtent2D VulkanSwapchainSupportDetails::ChooseSwapExtent(const WindowHandle& window) const {
+  if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
+    return capabilities.currentExtent;
+  } else {
+    glm::ivec2 size = GetWindowFramebufferExtent(window);
+
+    VkExtent2D actualExtent = { 
+      static_cast<uint32_t>(size.x),
+      static_cast<uint32_t>(size.y),
+    };
+
+    actualExtent.width = std::clamp(actualExtent.width, capabilities.minImageExtent.width, capabilities.maxImageExtent.width);
+    actualExtent.height = std::clamp(actualExtent.height, capabilities.minImageExtent.height, capabilities.maxImageExtent.height);
+
+    return actualExtent;
+  }
 }
 
 }

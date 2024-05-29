@@ -17,7 +17,6 @@ typedef VkResult (*PFN_vkCreateMetalSurfaceEXT)(VkInstance, const VkMetalSurface
 
 namespace Fractal {
 
-
 void WindowSurface::CreatePlatformWindowVkSurfaceKHR(const WindowHandle& window_handle) {
   FL_ASSERT(window_handle);
   

@@ -64,18 +64,18 @@ static void PopulateDeviceExtensions(VkDeviceCreateInfo& device_info) {
   device_info.enabledExtensionCount = FL_ARRAYSIZE(kRequiredDeviceExtensions);
 }
 
-bool Instance::CheckDeviceSuitability(VkPhysicalDevice device, VkSurfaceKHR surface) {
+bool Instance::CheckDeviceSuitability(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window) {
   VulkanQueueFamilyIndices indices(device, surface);
-  VulkanSwapchainSupportDetails swapchain_support(device, surface);
+  VulkanSwapchainSupportDetails swapchain_support(device, surface, window);
   
   return CheckDeviceExtensionSupport(device) && indices.IsComplete() && swapchain_support.IsSuitable();
 }
 
-int Instance::RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface) {
+int Instance::RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window) {
   VkPhysicalDeviceProperties device_properties;
   vkGetPhysicalDeviceProperties(device, &device_properties);
 
-  if (!Instance::CheckDeviceSuitability(device, surface)) {
+  if (!Instance::CheckDeviceSuitability(device, surface, window)) {
     return 0;
   }
 
@@ -107,7 +107,7 @@ int Instance::RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface) 
   return score;
 }
 
-void Instance::ChoosePhysicalDevice(VkSurfaceKHR surface) {
+void Instance::ChoosePhysicalDevice(VkSurfaceKHR surface, const WindowHandle& window) {
   uint32_t device_count = 0;
   vkEnumeratePhysicalDevices(instance, &device_count, nullptr);
   FL_ASSERT(device_count > 0);
@@ -117,7 +117,7 @@ void Instance::ChoosePhysicalDevice(VkSurfaceKHR surface) {
 
   int highest_score = 0;
   for (auto device : devices) {
-    int current_score = RatePhysicalDevice(device, surface);
+    int current_score = RatePhysicalDevice(device, surface, window);
     if (current_score > highest_score) {
       highest_score = current_score;
       physical_device = device;
@@ -131,8 +131,8 @@ void Instance::ChoosePhysicalDevice(VkSurfaceKHR surface) {
   FL_LOG_INFO("Vulkan Device: {}", props.deviceName);
 }
 
-void Instance::CreateDevice(VkSurfaceKHR surface) {
-  ChoosePhysicalDevice(surface);
+void Instance::CreateDevice(VkSurfaceKHR surface, const WindowHandle& window) {
+  ChoosePhysicalDevice(surface, window);
 
   VkPhysicalDeviceFeatures device_features { };
 

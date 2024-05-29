@@ -9,6 +9,8 @@
 #include "fractal/base/platform/macos/macos_forward_declarations.hpp"
 #endif
 
+#include <glm/glm.hpp>
+
 namespace Fractal {
   
 #ifdef FL_PLATFORM_WINDOWS
@@ -19,4 +21,7 @@ namespace Fractal {
   typedef NsView WindowHandle;
 #endif
 
+glm::ivec2 GetWindowFramebufferExtent(const WindowHandle& window);
+
 }
+

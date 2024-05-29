@@ -1,6 +1,6 @@
 #pragma once
 
-#include "fractal/base/surface/window_handle.hpp"
+#include "fractal/base/platform/window_handle.hpp"
 
 namespace Fractal {
 

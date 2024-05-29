@@ -76,6 +76,8 @@ add_subdirectory(src/lib/volk)
 set_target_properties(volk PROPERTIES FOLDER "Fractal/Vulkan")
 target_link_libraries(FractalBackendVulkan PUBLIC volk)
 
+target_link_libraries(FractalBackendVulkan PUBLIC glm)
+
 if (PROJECT_IS_TOP_LEVEL)
   set(FRACTAL_BACKEND_NAME Vulkan)
   include(src/fractal/fractal_example.cmake)

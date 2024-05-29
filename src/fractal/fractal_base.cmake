@@ -3,6 +3,11 @@ set(FRACTAL_SRC_FRACTAL_FILES
 )
 source_group("fractal" FILES ${FRACTAL_SRC_FRACTAL_FILES})
 
+set(FRACTAL_SRC_FRACTAL_BASE_PLATFORM_FILES
+  src/fractal/base/platform/window_handle.hpp
+)
+source_group("fractal/base/platform" FILES ${FRACTAL_SRC_FRACTAL_BASE_PLATFORM_FILES})
+
 if (WIN32)
   set(FRACTAL_SRC_FRACTAL_BASE_PLATFORM_WINDOWS_FILES
     src/fractal/base/platform/windows/windows_forward_declarations.hpp
@@ -13,6 +18,7 @@ endif()
 if (APPLE)
   set(FRACTAL_SRC_FRACTAL_BASE_PLATFORM_MACOS_FILES
     src/fractal/base/platform/macos/macos_forward_declarations.hpp
+    src/fractal/base/platform/macos/macos_window_handle.mm
   )
   source_group("fractal/base/platform/macos" FILES ${FRACTAL_SRC_FRACTAL_BASE_PLATFORM_MACOS_FILES})
 endif()
@@ -33,13 +39,13 @@ source_group("fractal/base/instance" FILES ${FRACTAL_SRC_FRACTAL_BASE_INSTANCE_F
 
 set(FRACTAL_SRC_FRACTAL_BASE_SURFACE_FILES
   src/fractal/base/surface/window_surface_create_info.hpp
-  src/fractal/base/surface/window_handle.hpp
 )
 source_group("fractal/base/surface" FILES ${FRACTAL_SRC_FRACTAL_BASE_SURFACE_FILES})
 
 set(FRACTAL_BASE_FILES
   ${FRACTAL_SRC_FRACTAL_FILES}
 
+  ${FRACTAL_SRC_FRACTAL_BASE_PLATFORM_FILES}
   ${FRACTAL_SRC_FRACTAL_BASE_PLATFORM_WINDOWS_FILES}
   ${FRACTAL_SRC_FRACTAL_BASE_PLATFORM_MACOS_FILES}
 

@@ -2,6 +2,7 @@
 #include "fractal/backend/vulkan/common/vulkan_base.hpp"
 
 #include "fractal/base/instance/instance_create_info.hpp"
+#include "fractal/base/platform/window_handle.hpp"
 
 namespace Fractal {
 
@@ -11,15 +12,15 @@ public:
   ~Instance();
 
 private:
-  void ChoosePhysicalDevice(VkSurfaceKHR surface);
-  void CreateDevice(VkSurfaceKHR surface);
+  void ChoosePhysicalDevice(VkSurfaceKHR surface, const WindowHandle& window);
+  void CreateDevice(VkSurfaceKHR surface, const WindowHandle& window);
   void CreateDebugMessenger();
 
 private:
   static void PopulateInstanceCreateInfoEnabledExtensions(VkInstanceCreateInfo& instance_info);
 
-  static bool CheckDeviceSuitability(VkPhysicalDevice device, VkSurfaceKHR surface);
-  static int RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface);
+  static bool CheckDeviceSuitability(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window);
+  static int RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window);
 
 #ifdef FL_BUILD_DEBUG
   static void ListInstanceExtensionSupport();
