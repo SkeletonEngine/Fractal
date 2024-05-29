@@ -69,10 +69,6 @@ target_include_directories(FractalBackendVulkan PUBLIC src)
 set_target_properties(FractalBackendVulkan PROPERTIES FOLDER "Fractal/Vulkan")
 target_compile_definitions(FractalBackendVulkan PUBLIC FRACTAL_BACKEND_VULKAN)
 
-if (APPLE)
-  target_link_libraries(FractalBackendVulkan PRIVATE "-framework Cocoa")
-endif()
-
 if(WIN32)
   set(VOLK_STATIC_DEFINES VK_USE_PLATFORM_WIN32_KHR)
 endif()

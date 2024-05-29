@@ -28,3 +28,7 @@ target_compile_features("FractalBackend${FRACTAL_BACKEND_NAME}Example" PUBLIC cx
 target_include_directories("FractalBackend${FRACTAL_BACKEND_NAME}Example" PUBLIC src)
 target_link_libraries("FractalBackend${FRACTAL_BACKEND_NAME}Example" PRIVATE "FractalBackend${FRACTAL_BACKEND_NAME}")
 set_target_properties("FractalBackend${FRACTAL_BACKEND_NAME}Example" PROPERTIES FOLDER "Fractal/Examples")
+
+if (APPLE)
+  target_link_libraries("FractalBackend${FRACTAL_BACKEND_NAME}Example" PRIVATE "-framework Cocoa")
+endif()
