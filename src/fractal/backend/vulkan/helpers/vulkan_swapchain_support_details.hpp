@@ -18,7 +18,7 @@ private:
   VkPresentModeKHR ChooseSwapchainPresentMode() const;
   VkExtent2D ChooseSwapExtent(const WindowHandle& window) const;
 
-private:
+public:
   VkSurfaceCapabilitiesKHR capabilities;
   
   VkSurfaceFormatKHR* formats = nullptr;

@@ -22,8 +22,8 @@ private:
   VkAllocationCallbacks* allocator;
 
   // Owned by this class
+  Swapchain* swapchain;
   VkSurfaceKHR surface = VK_NULL_HANDLE;
-  Swapchain swapchain;
 };
 
 }

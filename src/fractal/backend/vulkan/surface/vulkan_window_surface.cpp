@@ -23,13 +23,13 @@ WindowSurface::WindowSurface(const WindowSurfaceCreateInfo& create_info) {
     FL_ASSERT(Instance::CheckDeviceSuitability(create_info.instance->physical_device, surface, create_info.window_handle));
   }
   
-  swapchain.CreateSwapchain();
+  swapchain = new Swapchain(create_info.instance->physical_device, surface, create_info.window_handle);
   
   FL_LOG_TRACE("Vulkan WindowSurface Created");
 }
 
 WindowSurface::~WindowSurface() {
-  swapchain.DestroySwapchain();
+  delete swapchain;
   vkDestroySurfaceKHR(instance, surface, allocator);
   FL_LOG_TRACE("Vulkan WindowSurface Destroyed");
 }

@@ -25,9 +25,11 @@ VulkanSwapchainSupportDetails::VulkanSwapchainSupportDetails(VkPhysicalDevice de
       vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &present_mode_count, present_modes);
   }
   
-  ChooseSwapchainSurfaceFormat();
-  ChooseSwapchainPresentMode();
-  ChooseSwapExtent(window);
+  surface_format = ChooseSwapchainSurfaceFormat();
+  present_mode = ChooseSwapchainPresentMode();
+  extent = ChooseSwapExtent(window);
+  
+  glm::ivec2 size = GetWindowFramebufferExtent(window);
 }
 
 VulkanSwapchainSupportDetails::~VulkanSwapchainSupportDetails() {
