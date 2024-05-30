@@ -5,6 +5,7 @@
 namespace Fractal {
 
 WindowHandle::WindowHandle(HWND hwnd) : hwnd(hwnd) {
+  FL_ASSERT(hwnd);
 }
 
 glm::ivec2 WindowHandle::GetFramebufferExtent() const {

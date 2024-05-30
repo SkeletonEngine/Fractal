@@ -4,8 +4,12 @@
 
 namespace Fractal {
 
-glm::ivec2 GetWindowFramebufferExtent(const WindowHandle& window) {
-  NSRect rect = [window bounds];
+WindowHandle::WindowHandle(NsView nsview) : nsview(nsview) {
+  FL_ASSERT(nsview);
+}
+
+glm::ivec2 WindowHandle::GetFramebufferExtent() const {
+  NSRect rect = [nsview bounds];
   return glm::ivec2(rect.size.width, rect.size.height);
 }
 
