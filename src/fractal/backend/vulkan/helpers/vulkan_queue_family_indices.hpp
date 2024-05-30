@@ -8,14 +8,14 @@ public:
   VulkanQueueFamilyIndices(VkPhysicalDevice physical_device, VkSurfaceKHR surface);
 
 public:
-  int GetGraphicsFamily() const;
-  int GetPresentFamily() const;
+  uint32_t GetGraphicsFamily() const;
+  uint32_t GetPresentFamily() const;
 
   bool IsComplete() const;
 
 private:
-  int graphics_family = -1;
-  int present_family  = -1;
+  uint32_t graphics_family = -1;
+  uint32_t present_family  = -1;
 };
 
 }

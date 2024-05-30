@@ -23,7 +23,7 @@ WindowSurface::WindowSurface(const WindowSurfaceCreateInfo& create_info) {
     FL_ASSERT(Instance::CheckDeviceSuitability(create_info.instance->physical_device, surface, create_info.window_handle));
   }
   
-  swapchain = new Swapchain(create_info.instance->physical_device, surface, create_info.window_handle);
+  swapchain = new Swapchain(create_info.instance->device, create_info.instance->physical_device, create_info.instance->allocator, surface, create_info.window_handle);
   
   FL_LOG_TRACE("Vulkan WindowSurface Created");
 }

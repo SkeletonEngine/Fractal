@@ -32,11 +32,11 @@ VulkanQueueFamilyIndices::VulkanQueueFamilyIndices(VkPhysicalDevice physical_dev
   }
 }
 
-int VulkanQueueFamilyIndices::GetGraphicsFamily() const {
+uint32_t VulkanQueueFamilyIndices::GetGraphicsFamily() const {
   return graphics_family;
 }
 
-int VulkanQueueFamilyIndices::GetPresentFamily() const {
+uint32_t VulkanQueueFamilyIndices::GetPresentFamily() const {
   return present_family;
 }
 

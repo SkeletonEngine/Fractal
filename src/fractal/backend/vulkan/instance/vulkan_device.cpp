@@ -138,7 +138,7 @@ void Instance::CreateDevice(VkSurfaceKHR surface, const WindowHandle& window) {
 
   VulkanQueueFamilyIndices indices(physical_device, surface);
   std::vector<VkDeviceQueueCreateInfo> queue_create_infos;
-  std::set<int> unique_queue_families = { indices.GetGraphicsFamily(), indices.GetPresentFamily() };
+  std::set<uint32_t> unique_queue_families = { indices.GetGraphicsFamily(), indices.GetPresentFamily() };
   float queue_priority = 1.0f;
   for (int queue_family : unique_queue_families) {
     VkDeviceQueueCreateInfo queue_create_info { VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO };

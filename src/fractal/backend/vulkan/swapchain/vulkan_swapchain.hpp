@@ -7,16 +7,22 @@ namespace Fractal {
 
 class Swapchain {
 public:
-  Swapchain(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window);
+  Swapchain(VkDevice device, VkPhysicalDevice physical_device, VkAllocationCallbacks* allocator, VkSurfaceKHR surface, const WindowHandle& window);
   
 public:
   void CreateSwapchain();
   void DestroySwapchain();
   
 private:
-  VkPhysicalDevice device;
+  // Non-owned objects
+  VkDevice device;
+  VkPhysicalDevice physical_device;
+  VkAllocationCallbacks* allocator;
   VkSurfaceKHR surface;
   const WindowHandle& window;
+  
+  // Owned objects
+  VkSwapchainKHR swapchain;
 };
 
 }
