@@ -28,8 +28,6 @@ VulkanSwapchainSupportDetails::VulkanSwapchainSupportDetails(VkPhysicalDevice de
   surface_format = ChooseSwapchainSurfaceFormat();
   present_mode = ChooseSwapchainPresentMode();
   extent = ChooseSwapExtent(window);
-  
-  glm::ivec2 size = GetWindowFramebufferExtent(window);
 }
 
 VulkanSwapchainSupportDetails::~VulkanSwapchainSupportDetails() {
@@ -65,17 +63,17 @@ VkExtent2D VulkanSwapchainSupportDetails::ChooseSwapExtent(const WindowHandle& w
   if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
     return capabilities.currentExtent;
   } else {
-    glm::ivec2 size = GetWindowFramebufferExtent(window);
+    glm::ivec2 size = window.GetFramebufferExtent();
 
-    VkExtent2D actualExtent = { 
+    VkExtent2D actual_extent = { 
       static_cast<uint32_t>(size.x),
       static_cast<uint32_t>(size.y),
     };
 
-    actualExtent.width = std::clamp(actualExtent.width, capabilities.minImageExtent.width, capabilities.maxImageExtent.width);
-    actualExtent.height = std::clamp(actualExtent.height, capabilities.minImageExtent.height, capabilities.maxImageExtent.height);
+    actual_extent.width = std::clamp(actual_extent.width, capabilities.minImageExtent.width, capabilities.maxImageExtent.width);
+    actual_extent.height = std::clamp(actual_extent.height, capabilities.minImageExtent.height, capabilities.maxImageExtent.height);
 
-    return actualExtent;
+    return actual_extent;
   }
 }
 

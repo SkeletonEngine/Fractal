@@ -12,7 +12,6 @@ Swapchain::Swapchain(VkPhysicalDevice device, VkSurfaceKHR surface, const Window
 
 void Swapchain::CreateSwapchain() {
   VulkanSwapchainSupportDetails support(device, surface, window);
-  FL_LOG_INFO("Swapchain extent: ({}, {})", support.extent.width, support.extent.height);
 }
 
 void Swapchain::DestroySwapchain() {

@@ -12,16 +12,32 @@
 #include <glm/glm.hpp>
 
 namespace Fractal {
-  
+
+class WindowHandle {
+public:
 #ifdef FL_PLATFORM_WINDOWS
-  typedef HWND WindowHandle;
+  WindowHandle(HWND hwnd);
+#endif
+
+#ifdef FL_PLATFORM_MACOS
+  WindowHandle(NsView nsview);
+#endif
+
+public:
+  glm::ivec2 GetFramebufferExtent() const;
+
+private:
+#ifdef FL_PLATFORM_WINDOWS
+  HWND hwnd;
 #endif
   
 #ifdef FL_PLATFORM_MACOS
-  typedef NsView WindowHandle;
+  NsView nsview;
 #endif
 
-glm::ivec2 GetWindowFramebufferExtent(const WindowHandle& window);
+private:
+  friend class WindowSurface;
+};
 
 }
 

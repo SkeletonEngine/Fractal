@@ -11,6 +11,7 @@ source_group("fractal/base/platform" FILES ${FRACTAL_SRC_FRACTAL_BASE_PLATFORM_F
 if (WIN32)
   set(FRACTAL_SRC_FRACTAL_BASE_PLATFORM_WINDOWS_FILES
     src/fractal/base/platform/windows/windows_forward_declarations.hpp
+    src/fractal/base/platform/windows/windows_window_handle.cpp
   )
   source_group("fractal/base/platform/windows" FILES ${FRACTAL_SRC_FRACTAL_BASE_PLATFORM_WINDOWS_FILES})
 endif()
