@@ -1,13 +1,14 @@
 #include <cstdio>
 
 #include <fractal/fractal.hpp>
-
-#ifdef __APPLE__
-  #include "example/platform/macos/macos_window.hpp"
+#include <GLFW/glfw3.h>
+#ifdef FL_PLATFORM_MACOS
+  #define GLFW_EXPOSE_NATIVE_COCOA
 #endif
-#ifdef WIN32
-  #include "example/platform/windows/windows_window.hpp"
+#ifdef FL_PLATFORM_WIN32
+  #define GLFW_EXPOSE_NATIVE_WIN32
 #endif
+#include <GLFW/glfw3native.h>
 
 static void LoggerFunc(Fractal::LoggerLevel level, const char* message) {
   if (level >= Fractal::LoggerLevel::kTrace) {
@@ -16,12 +17,10 @@ static void LoggerFunc(Fractal::LoggerLevel level, const char* message) {
 }
 
 int main() {
-#ifdef __APPLE__
-  Fractal::Example::CocoaWindow window;
-#endif
-#ifdef WIN32
-  Fractal::Example::Win32Window window;
-#endif
+  glfwInit();
+  
+  glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+  GLFWwindow* window = glfwCreateWindow(640, 480, "Fractal Example", nullptr, nullptr);
   
   Fractal::Instance instance {{
     .logger_callback = LoggerFunc,
@@ -30,15 +29,18 @@ int main() {
     .instance = &instance,
 
 #ifdef __APPLE__
-    .window_handle = window.GetNSView()
+    .window_handle = glfwGetCocoaView(window),
 #endif
 #ifdef WIN32
-    .window_handle = window.GetHwnd()
+    .window_handle = glfwGetWin32Window(window),
 #endif
 
   }};
   
-  while (window.IsOpen()) {
-    window.PollEvents();
+  while (!glfwWindowShouldClose(window)) {
+    glfwPollEvents();
   }
+  
+  glfwDestroyWindow(window);
+  glfwTerminate();
 }
