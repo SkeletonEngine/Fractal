@@ -28,6 +28,7 @@ int main() {
   Fractal::Instance instance {{
     .logger_callback = LoggerFunc,
   }};
+
   Fractal::WindowSurface surface {{
     .instance = &instance,
 
@@ -37,7 +38,6 @@ int main() {
 #ifdef WIN32
     .window_handle = glfwGetWin32Window(window),
 #endif
-
   }};
   
   while (!glfwWindowShouldClose(window)) {

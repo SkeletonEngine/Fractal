@@ -42,12 +42,17 @@ set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES
 )
 source_group("fractal/backend/vulkan/surface" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES})
 
-
 set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SWAPCHAIN_FILES
   src/fractal/backend/vulkan/swapchain/vulkan_swapchain.hpp
   src/fractal/backend/vulkan/swapchain/vulkan_swapchain.cpp
 )
 source_group("fractal/backend/vulkan/swapchain" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SWAPCHAIN_FILES})
+
+set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SHADER_FILES
+  src/fractal/backend/vulkan/shader/vulkan_shader.hpp
+  src/fractal/backend/vulkan/shader/vulkan_shader.cpp
+)
+source_group("fractal/backend/vulkan/shader" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SHADER_FILES})
 
 set(FRACTAL_BACKEND_VULKAN_FILES
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_PLATFORM_WINDOWS_FILES}
@@ -58,6 +63,7 @@ set(FRACTAL_BACKEND_VULKAN_FILES
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_INSTANCE_FILES}
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES}
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SWAPCHAIN_FILES}
+  ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SHADER_FILES}
 )
 
 add_library(FractalBackendVulkan
