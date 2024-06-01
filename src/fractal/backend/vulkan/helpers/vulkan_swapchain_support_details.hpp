@@ -7,7 +7,7 @@ namespace Fractal {
 
 class VulkanSwapchainSupportDetails {
 public:
-  VulkanSwapchainSupportDetails(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window);
+  VulkanSwapchainSupportDetails(VkPhysicalDevice device, VkSurfaceKHR surface, WindowHandle window);
   ~VulkanSwapchainSupportDetails();
 
 public:
@@ -16,7 +16,7 @@ public:
 private:
   VkSurfaceFormatKHR ChooseSwapchainSurfaceFormat() const;
   VkPresentModeKHR ChooseSwapchainPresentMode() const;
-  VkExtent2D ChooseSwapExtent(const WindowHandle& window) const;
+  VkExtent2D ChooseSwapExtent(WindowHandle window) const;
 
 public:
   VkSurfaceCapabilitiesKHR capabilities;

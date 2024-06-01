@@ -64,14 +64,14 @@ static void PopulateDeviceExtensions(VkDeviceCreateInfo& device_info) {
   device_info.enabledExtensionCount = FL_ARRAYSIZE(kRequiredDeviceExtensions);
 }
 
-bool Instance::CheckDeviceSuitability(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window) {
+bool Instance::CheckDeviceSuitability(VkPhysicalDevice device, VkSurfaceKHR surface, WindowHandle window) {
   VulkanQueueFamilyIndices indices(device, surface);
   VulkanSwapchainSupportDetails swapchain_support(device, surface, window);
   
   return CheckDeviceExtensionSupport(device) && indices.IsComplete() && swapchain_support.IsSuitable();
 }
 
-int Instance::RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window) {
+int Instance::RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface, WindowHandle window) {
   VkPhysicalDeviceProperties device_properties;
   vkGetPhysicalDeviceProperties(device, &device_properties);
 
@@ -107,7 +107,7 @@ int Instance::RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface, 
   return score;
 }
 
-void Instance::ChoosePhysicalDevice(VkSurfaceKHR surface, const WindowHandle& window) {
+void Instance::ChoosePhysicalDevice(VkSurfaceKHR surface, WindowHandle window) {
   uint32_t device_count = 0;
   vkEnumeratePhysicalDevices(instance, &device_count, nullptr);
   FL_ASSERT(device_count > 0);
@@ -131,7 +131,7 @@ void Instance::ChoosePhysicalDevice(VkSurfaceKHR surface, const WindowHandle& wi
   FL_LOG_INFO("Vulkan Device: {}", props.deviceName);
 }
 
-void Instance::CreateDevice(VkSurfaceKHR surface, const WindowHandle& window) {
+void Instance::CreateDevice(VkSurfaceKHR surface, WindowHandle window) {
   ChoosePhysicalDevice(surface, window);
 
   VkPhysicalDeviceFeatures device_features { };

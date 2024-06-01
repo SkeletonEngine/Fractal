@@ -10,7 +10,7 @@
 
 namespace Fractal {
 
-VulkanSwapchainSupportDetails::VulkanSwapchainSupportDetails(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window) {
+VulkanSwapchainSupportDetails::VulkanSwapchainSupportDetails(VkPhysicalDevice device, VkSurfaceKHR surface, WindowHandle window) {
   vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &capabilities);
 
   vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &format_count, nullptr);
@@ -59,7 +59,7 @@ VkPresentModeKHR VulkanSwapchainSupportDetails::ChooseSwapchainPresentMode() con
   return VK_PRESENT_MODE_FIFO_KHR;
 }
 
-VkExtent2D VulkanSwapchainSupportDetails::ChooseSwapExtent(const WindowHandle& window) const {
+VkExtent2D VulkanSwapchainSupportDetails::ChooseSwapExtent(WindowHandle window) const {
   if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
     return capabilities.currentExtent;
   } else {

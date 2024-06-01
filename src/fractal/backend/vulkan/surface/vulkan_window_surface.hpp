@@ -14,7 +14,7 @@ public:
   ~WindowSurface();
   
 private:
-  void CreatePlatformWindowVkSurfaceKHR(const WindowHandle& window_handle);
+  void CreatePlatformWindowVkSurfaceKHR(WindowHandle window_handle);
 
 private:
   // Non-owning pointers
@@ -22,7 +22,7 @@ private:
   VkAllocationCallbacks* allocator;
 
   // Owned by this class
-  Swapchain* swapchain;
+  Swapchain swapchain;
   VkSurfaceKHR surface = VK_NULL_HANDLE;
 };
 

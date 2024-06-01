@@ -15,6 +15,8 @@ namespace Fractal {
 
 class WindowHandle {
 public:
+  WindowHandle() = default;
+
 #ifdef FL_PLATFORM_WINDOWS
   WindowHandle(HWND hwnd);
 #endif

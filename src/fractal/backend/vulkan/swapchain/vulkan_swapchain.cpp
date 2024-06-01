@@ -8,13 +8,12 @@
 
 namespace Fractal {
 
-Swapchain::Swapchain(VkDevice device, VkPhysicalDevice physical_device, VkAllocationCallbacks* allocator, VkSurfaceKHR surface, const WindowHandle& window)
-  : device(device), physical_device(physical_device), allocator(allocator), surface(surface), window(window) {
-    CreateSwapchain();
-}
-
-Swapchain::~Swapchain() {
-  DestroySwapchain();
+void Swapchain::SetupSwapchain(VkDevice device, VkPhysicalDevice physical_device, VkAllocationCallbacks* allocator, VkSurfaceKHR surface, WindowHandle window) {
+  this->device = device;
+  this->physical_device = physical_device;
+  this->allocator = allocator;
+  this->surface = surface;
+  this->window = window;
 }
 
 void Swapchain::CreateSwapchain() {

@@ -12,15 +12,15 @@ public:
   ~Instance();
 
 private:
-  void ChoosePhysicalDevice(VkSurfaceKHR surface, const WindowHandle& window);
-  void CreateDevice(VkSurfaceKHR surface, const WindowHandle& window);
+  void ChoosePhysicalDevice(VkSurfaceKHR surface, WindowHandle window);
+  void CreateDevice(VkSurfaceKHR surface, WindowHandle window);
   void CreateDebugMessenger();
 
 private:
   static void PopulateInstanceCreateInfoEnabledExtensions(VkInstanceCreateInfo& instance_info);
 
-  static bool CheckDeviceSuitability(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window);
-  static int RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface, const WindowHandle& window);
+  static bool CheckDeviceSuitability(VkPhysicalDevice device, VkSurfaceKHR surface, WindowHandle window);
+  static int RatePhysicalDevice(VkPhysicalDevice device, VkSurfaceKHR surface, WindowHandle window);
 
 #ifdef FL_BUILD_DEBUG
   static void ListInstanceExtensionSupport();
