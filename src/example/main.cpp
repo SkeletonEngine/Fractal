@@ -13,6 +13,9 @@ static void LoggerFunc(Fractal::LoggerLevel level, const char* message) {
   if (level >= Fractal::LoggerLevel::kTrace) {
     printf("{level: \"%s\", message: \"%s\" }\n", Fractal::LoggerLevelStr(level), message);
   }
+  if (level >= Fractal::LoggerLevel::kWarn) {
+    FL_DEBUGBREAK();
+  }
 }
 
 int main() {

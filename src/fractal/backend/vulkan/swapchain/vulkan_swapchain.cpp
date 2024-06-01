@@ -13,9 +13,14 @@ Swapchain::Swapchain(VkDevice device, VkPhysicalDevice physical_device, VkAlloca
     CreateSwapchain();
 }
 
+Swapchain::~Swapchain() {
+  DestroySwapchain();
+}
+
 void Swapchain::CreateSwapchain() {
   VulkanSwapchainSupportDetails support(physical_device, surface, window);
-  FL_LOG_TRACE("Createing swapchain with extent ({}, {})", support.extent.width, support.extent.height);
+  extent = support.extent;
+  image_format = support.surface_format.format;
   
   uint32_t image_count = support.capabilities.minImageCount + 1;
   if (support.capabilities.maxImageCount > 0 && image_count > support.capabilities.maxImageCount) {
@@ -49,9 +54,18 @@ void Swapchain::CreateSwapchain() {
   swapchain_info.oldSwapchain = VK_NULL_HANDLE;
   
   VK_ASSERT(vkCreateSwapchainKHR(device, &swapchain_info, allocator, &swapchain));
+
+  vkGetSwapchainImagesKHR(device, swapchain, &image_count, nullptr);
+  images = new VkImage[image_count];
+  vkGetSwapchainImagesKHR(device, swapchain, &image_count, images);
+
+  FL_LOG_TRACE("Vulkan Swapchain created");
 }
 
 void Swapchain::DestroySwapchain() {
+  delete images;
+  vkDestroySwapchainKHR(device, swapchain, allocator);
+  FL_LOG_TRACE("Vulkan Swapchain destroyed");
 }
 
 }
