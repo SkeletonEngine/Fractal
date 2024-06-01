@@ -31,7 +31,7 @@ endif()
 target_link_libraries("FractalBackend${FRACTAL_BACKEND_NAME}Example" PRIVATE glfw)
 
 include(src/fractal/base/shader_compile_helper.cmake)
-create_shader_compile_target("FractalBackend${FRACTAL_BACKEND_NAME}ExampleShaders" "${CMAKE_CURRENT_BINARY_DIR}/../aliens/"
+create_shader_compile_target("FractalBackend${FRACTAL_BACKEND_NAME}ExampleShaders" "${CMAKE_CURRENT_BINARY_DIR}/../shaders/"
   src/example/shaders/example.vert.glsl
   src/example/shaders/example.frag.glsl
 )

@@ -17,7 +17,7 @@ typedef VkResult (*PFN_vkCreateMetalSurfaceEXT)(VkInstance, const VkMetalSurface
 
 namespace Fractal {
 
-void WindowSurface::CreatePlatformWindowVkSurfaceKHR(const WindowHandle& window_handle) {
+void WindowSurface::CreatePlatformWindowVkSurfaceKHR(WindowHandle window_handle) {
   NSBundle* bundle = [NSBundle bundleWithPath:@"/System/Library/Frameworks/QuartzCore.framework"];
   if (!bundle) {
     FL_LOG_ERROR("Cocoa: Failed to find QuartzCore.framework");
