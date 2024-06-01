@@ -55,21 +55,38 @@ void Swapchain::CreateSwapchain() {
   VK_ASSERT(vkCreateSwapchainKHR(device, &swapchain_info, allocator, &swapchain));
 
   vkGetSwapchainImagesKHR(device, swapchain, &image_count, nullptr);
-  images = new VkImage[image_count];
-  vkGetSwapchainImagesKHR(device, swapchain, &image_count, images);
+  images.resize(image_count);
+  vkGetSwapchainImagesKHR(device, swapchain, &image_count, images.data());
+
+  image_views.resize(images.size());
+
+  VkImageViewCreateInfo view_info { VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO };
+  view_info.viewType = VK_IMAGE_VIEW_TYPE_2D;
+  view_info.format = image_format;
+  view_info.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
+  view_info.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+  view_info.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+  view_info.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+  view_info.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+  view_info.subresourceRange.baseMipLevel = 0;
+  view_info.subresourceRange.levelCount = 1;
+  view_info.subresourceRange.baseArrayLayer = 0;
+  view_info.subresourceRange.layerCount = 1;
+
+  for (size_t i = 0; i < images.size(); ++i) {
+    view_info.image = images[i];
+    VK_CHECK(vkCreateImageView(device, &view_info, nullptr, &image_views[i]));
+  }
 
   FL_LOG_TRACE("Vulkan Swapchain created");
 }
 
 void Swapchain::DestroySwapchain() {
-  delete images;
+  for (auto image_view : image_views) {
+    vkDestroyImageView(device, image_view, allocator);
+  }
   vkDestroySwapchainKHR(device, swapchain, allocator);
   FL_LOG_TRACE("Vulkan Swapchain destroyed");
-}
-
-
-void Swapchain::CreateImageViews() {
-
 }
 
 }

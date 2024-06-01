@@ -9,11 +9,9 @@ class Swapchain {
 public:
   void SetupSwapchain(VkDevice device, VkPhysicalDevice physical_device, VkAllocationCallbacks* allocator, VkSurfaceKHR surface, WindowHandle window);
 
+public:
   void CreateSwapchain();
   void DestroySwapchain();
-
-private:
-  void CreateImageViews();
   
 private:
   // Non-owned objects
@@ -25,10 +23,10 @@ private:
   
   // Owned objects
   VkSwapchainKHR swapchain;
-  VkImage* images;
-  uint32_t image_count;
+  std::vector<VkImage> images;
   VkFormat image_format;
   VkExtent2D extent;
+  std::vector<VkImageView> image_views;
 };
 
 }

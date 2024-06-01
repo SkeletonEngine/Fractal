@@ -38,7 +38,7 @@ Instance::Instance(const InstanceCreateInfo& create_info) {
   FL_ASSERT(debug_messenger);
 #endif
   
-  FL_LOG_TRACE("Vulkan Instance Created");
+  FL_LOG_TRACE("Vulkan Instance created");
 }
 
 Instance::~Instance() {
@@ -47,7 +47,7 @@ Instance::~Instance() {
   }
   FL_DEBUG_ONLY(vkDestroyDebugUtilsMessengerEXT(instance, debug_messenger, allocator));
   vkDestroyInstance(instance, allocator);
-  FL_LOG_TRACE("Vulkan Instance Destroyed");
+  FL_LOG_TRACE("Vulkan Instance destroyed");
 }
 
 }
