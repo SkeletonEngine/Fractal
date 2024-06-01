@@ -54,3 +54,8 @@ set(FRACTAL_BASE_FILES
   ${FRACTAL_SRC_FRACTAL_BASE_INSTANCE_FILES}
   ${FRACTAL_SRC_FRACTAL_BASE_SURFACE_FILES}
 )
+
+if (NOT TARGET glm)
+  add_subdirectory(src/lib/glm)
+  set_target_properties(glm PROPERTIES FOLDER "Fractal/lib")
+endif()

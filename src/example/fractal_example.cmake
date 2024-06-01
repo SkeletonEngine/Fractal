@@ -3,22 +3,6 @@ set(FRACTAL_SRC_EXAMPLE_FILES
 )
 source_group("src" FILES ${FRACTAL_SRC_EXAMPLE_FILES})
 
-if (APPLE)
-  set(FRACTAL_SRC_EXAMPLE_PLATFORM_MACOS_FILES
-    src/example/platform/macos/macos_window.hpp
-    src/example/platform/macos/macos_window.mm
-  )
-  source_group("src/platform/macos" FILES ${FRACTAL_SRC_EXAMPLE_PLATFORM_MACOS_FILES})
-endif()
-
-if (WIN32)
-  set(FRACTAL_SRC_EXAMPLE_PLATFORM_WINDOWS_FILES
-    src/example/platform/windows/windows_window.hpp
-    src/example/platform/windows/windows_window.cpp
-  )
-  source_group("src/platform/windows" FILES ${FRACTAL_SRC_EXAMPLE_PLATFORM_WINDOWS_FILES})
-endif()
-
 add_executable("FractalBackend${FRACTAL_BACKEND_NAME}Example" 
   ${FRACTAL_SRC_EXAMPLE_FILES}
   ${FRACTAL_SRC_EXAMPLE_PLATFORM_MACOS_FILES}
@@ -32,3 +16,11 @@ set_target_properties("FractalBackend${FRACTAL_BACKEND_NAME}Example" PROPERTIES 
 if (APPLE)
   target_link_libraries("FractalBackend${FRACTAL_BACKEND_NAME}Example" PRIVATE "-framework Cocoa")
 endif()
+
+if (NOT TARGET glfw)
+  add_subdirectory(src/lib/glfw)
+  set_target_properties(glfw PROPERTIES FOLDER "Fractal/lib/GLFW3")
+  set_target_properties(uninstall PROPERTIES FOLDER "Fractal/lib/GLFW3")
+  set_target_properties(update_mappings PROPERTIES FOLDER "Fractal/lib/GLFW3")
+endif()
+target_link_libraries("FractalBackend${FRACTAL_BACKEND_NAME}Example" PRIVATE glfw)

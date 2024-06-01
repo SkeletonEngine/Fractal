@@ -29,6 +29,8 @@ void WindowSurface::CreatePlatformWindowVkSurfaceKHR(const WindowHandle& window_
     FL_LOG_ERROR("Cocoa: Failed to create layer for view");
     VK_ASSERT(VK_ERROR_EXTENSION_NOT_PRESENT);
   }
+  [window_handle.nsview setLayer:layer];
+  [window_handle.nsview setWantsLayer:YES];
   
   PFN_vkCreateMetalSurfaceEXT vkCreateMetalSurfaceEXT = (PFN_vkCreateMetalSurfaceEXT)vkGetInstanceProcAddr(instance, "vkCreateMetalSurfaceEXT");
   if (!vkCreateMetalSurfaceEXT) {

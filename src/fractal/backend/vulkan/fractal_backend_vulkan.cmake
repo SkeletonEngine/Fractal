@@ -66,19 +66,19 @@ add_library(FractalBackendVulkan
 )
 target_compile_features(FractalBackendVulkan PUBLIC cxx_std_20)
 target_include_directories(FractalBackendVulkan PUBLIC src)
-set_target_properties(FractalBackendVulkan PROPERTIES FOLDER "Fractal/Vulkan")
+set_target_properties(FractalBackendVulkan PROPERTIES FOLDER "Fractal")
 target_compile_definitions(FractalBackendVulkan PUBLIC FRACTAL_BACKEND_VULKAN)
 
 if(WIN32)
   set(VOLK_STATIC_DEFINES VK_USE_PLATFORM_WIN32_KHR)
 endif()
 add_subdirectory(src/lib/volk)
-set_target_properties(volk PROPERTIES FOLDER "Fractal/Vulkan")
+set_target_properties(volk PROPERTIES FOLDER "Fractal/lib")
 target_link_libraries(FractalBackendVulkan PUBLIC volk)
 
 target_link_libraries(FractalBackendVulkan PUBLIC glm)
 
 if (PROJECT_IS_TOP_LEVEL)
   set(FRACTAL_BACKEND_NAME Vulkan)
-  include(src/fractal/fractal_example.cmake)
+  include(src/example/fractal_example.cmake)
 endif()
