@@ -4,7 +4,8 @@
 namespace Fractal {
 
 class Shader {
-
+public:
+  Shader();
 };
 
 }

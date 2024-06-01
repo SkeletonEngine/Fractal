@@ -40,6 +40,8 @@ int main() {
 #endif
   }};
   
+  Fractal::Shader shader;
+  
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
   }
