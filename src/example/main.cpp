@@ -5,7 +5,7 @@
 #ifdef FL_PLATFORM_MACOS
   #define GLFW_EXPOSE_NATIVE_COCOA
 #endif
-#ifdef FL_PLATFORM_WIN32
+#ifdef FL_PLATFORM_WINDOWS
   #define GLFW_EXPOSE_NATIVE_WIN32
 #endif
 #include <GLFW/glfw3native.h>
