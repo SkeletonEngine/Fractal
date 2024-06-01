@@ -7,7 +7,7 @@
 
 namespace Fractal {
 
-VulkanQueueFamilyIndices::VulkanQueueFamilyIndices(VkPhysicalDevice physical_device, VkSurfaceKHR surface) {
+QueueFamilyIndices::QueueFamilyIndices(VkPhysicalDevice physical_device, VkSurfaceKHR surface) {
   uint32_t queue_family_count = 0;
   vkGetPhysicalDeviceQueueFamilyProperties(physical_device, &queue_family_count, nullptr);
   std::vector<VkQueueFamilyProperties> queue_families(queue_family_count);
@@ -32,15 +32,15 @@ VulkanQueueFamilyIndices::VulkanQueueFamilyIndices(VkPhysicalDevice physical_dev
   }
 }
 
-uint32_t VulkanQueueFamilyIndices::GetGraphicsFamily() const {
+uint32_t QueueFamilyIndices::GetGraphicsFamily() const {
   return graphics_family;
 }
 
-uint32_t VulkanQueueFamilyIndices::GetPresentFamily() const {
+uint32_t QueueFamilyIndices::GetPresentFamily() const {
   return present_family;
 }
 
-bool VulkanQueueFamilyIndices::IsComplete() const {
+bool QueueFamilyIndices::IsComplete() const {
   return graphics_family != -1 && present_family != -1;
 }
 

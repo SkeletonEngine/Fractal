@@ -11,6 +11,9 @@ public:
 
   void CreateSwapchain();
   void DestroySwapchain();
+
+private:
+  void CreateImageViews();
   
 private:
   // Non-owned objects

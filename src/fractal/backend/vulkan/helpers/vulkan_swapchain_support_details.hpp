@@ -5,10 +5,10 @@
 
 namespace Fractal {
 
-class VulkanSwapchainSupportDetails {
+class SwapchainSupportDetails {
 public:
-  VulkanSwapchainSupportDetails(VkPhysicalDevice device, VkSurfaceKHR surface, WindowHandle window);
-  ~VulkanSwapchainSupportDetails();
+  SwapchainSupportDetails(VkPhysicalDevice device, VkSurfaceKHR surface, WindowHandle window);
+  ~SwapchainSupportDetails();
 
 public:
   bool IsSuitable() const;

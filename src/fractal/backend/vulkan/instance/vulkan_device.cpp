@@ -65,8 +65,8 @@ static void PopulateDeviceExtensions(VkDeviceCreateInfo& device_info) {
 }
 
 bool Instance::CheckDeviceSuitability(VkPhysicalDevice device, VkSurfaceKHR surface, WindowHandle window) {
-  VulkanQueueFamilyIndices indices(device, surface);
-  VulkanSwapchainSupportDetails swapchain_support(device, surface, window);
+  QueueFamilyIndices indices(device, surface);
+  SwapchainSupportDetails swapchain_support(device, surface, window);
   
   return CheckDeviceExtensionSupport(device) && indices.IsComplete() && swapchain_support.IsSuitable();
 }
@@ -136,7 +136,7 @@ void Instance::CreateDevice(VkSurfaceKHR surface, WindowHandle window) {
 
   VkPhysicalDeviceFeatures device_features { };
 
-  VulkanQueueFamilyIndices indices(physical_device, surface);
+  QueueFamilyIndices indices(physical_device, surface);
   std::vector<VkDeviceQueueCreateInfo> queue_create_infos;
   std::set<uint32_t> unique_queue_families = { indices.GetGraphicsFamily(), indices.GetPresentFamily() };
   float queue_priority = 1.0f;

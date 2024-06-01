@@ -3,9 +3,9 @@
 
 namespace Fractal {
 
-class VulkanQueueFamilyIndices {
+class QueueFamilyIndices {
 public:
-  VulkanQueueFamilyIndices(VkPhysicalDevice physical_device, VkSurfaceKHR surface);
+  QueueFamilyIndices(VkPhysicalDevice physical_device, VkSurfaceKHR surface);
 
 public:
   uint32_t GetGraphicsFamily() const;

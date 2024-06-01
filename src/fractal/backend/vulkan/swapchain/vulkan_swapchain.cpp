@@ -17,7 +17,7 @@ void Swapchain::SetupSwapchain(VkDevice device, VkPhysicalDevice physical_device
 }
 
 void Swapchain::CreateSwapchain() {
-  VulkanSwapchainSupportDetails support(physical_device, surface, window);
+  SwapchainSupportDetails support(physical_device, surface, window);
   extent = support.extent;
   image_format = support.surface_format.format;
   
@@ -35,7 +35,7 @@ void Swapchain::CreateSwapchain() {
   swapchain_info.imageArrayLayers = 1;
   swapchain_info.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
   
-  VulkanQueueFamilyIndices indices(physical_device, surface);
+  QueueFamilyIndices indices(physical_device, surface);
   uint32_t queue_family_indices[] = { indices.GetGraphicsFamily(), indices.GetPresentFamily() };
 
   if (indices.GetGraphicsFamily() != indices.GetPresentFamily()) {
@@ -65,6 +65,11 @@ void Swapchain::DestroySwapchain() {
   delete images;
   vkDestroySwapchainKHR(device, swapchain, allocator);
   FL_LOG_TRACE("Vulkan Swapchain destroyed");
+}
+
+
+void Swapchain::CreateImageViews() {
+
 }
 
 }
