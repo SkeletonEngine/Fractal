@@ -40,7 +40,16 @@ int main() {
 #endif
   }};
   
-  Fractal::Shader shader;
+  Fractal::RenderPass render_pass {{
+    .surface = &surface,
+  }};
+  
+  Fractal::Shader shader {{
+    .instance = &instance,
+    .surface = &surface,
+    .vert_path = "build/shaders/example.vert.glsl.spv",
+    .frag_path = "build/shaders/example.frag.glsl.spv",
+  }};
   
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();

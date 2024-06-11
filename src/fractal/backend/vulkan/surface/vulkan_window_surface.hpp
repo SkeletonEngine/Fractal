@@ -20,10 +20,15 @@ private:
   // Non-owning pointers
   VkInstance instance;
   VkAllocationCallbacks* allocator;
+  VkDevice device;
 
   // Owned by this class
   Swapchain swapchain;
   VkSurfaceKHR surface = VK_NULL_HANDLE;
+  
+private:
+  friend class Shader;
+  friend class RenderPass;
 };
 
 }

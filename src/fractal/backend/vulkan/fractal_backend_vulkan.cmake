@@ -48,6 +48,12 @@ set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SWAPCHAIN_FILES
 )
 source_group("fractal/backend/vulkan/swapchain" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SWAPCHAIN_FILES})
 
+set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_RENDER_PASS_FILES
+  src/fractal/backend/vulkan/render_pass/vulkan_render_pass.hpp
+  src/fractal/backend/vulkan/render_pass/vulkan_render_pass.cpp
+)
+source_group("fractal/backend/vulkan/render_pass" FILES ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_RENDER_PASS_FILES})
+
 set(FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SHADER_FILES
   src/fractal/backend/vulkan/shader/vulkan_shader.hpp
   src/fractal/backend/vulkan/shader/vulkan_shader.cpp
@@ -63,6 +69,7 @@ set(FRACTAL_BACKEND_VULKAN_FILES
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_INSTANCE_FILES}
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SURFACE_FILES}
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SWAPCHAIN_FILES}
+  ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_RENDER_PASS_FILES}
   ${FRACTAL_SRC_FRACTAL_BACKEND_VULKAN_SHADER_FILES}
 )
 

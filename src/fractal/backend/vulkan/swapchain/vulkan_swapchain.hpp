@@ -27,6 +27,10 @@ private:
   VkFormat image_format;
   VkExtent2D extent;
   std::vector<VkImageView> image_views;
+  
+private:
+  friend class Shader;
+  friend class RenderPass;
 };
 
 }

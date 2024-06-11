@@ -47,6 +47,7 @@ private:
 
 private:
   friend class WindowSurface;
+  friend class Shader;
 };
 
 }

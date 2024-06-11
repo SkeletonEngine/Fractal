@@ -18,5 +18,13 @@ SpvFile::~SpvFile() {
   delete code;
 }
 
+const char* SpvFile::GetCode() const {
+  return code;
+}
+
+size_t SpvFile::GetCodeSize() const {
+  return code_size;
+}
+
 }
 

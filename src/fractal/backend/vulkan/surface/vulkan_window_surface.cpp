@@ -22,6 +22,7 @@ WindowSurface::WindowSurface(const WindowSurfaceCreateInfo& create_info) {
     FL_LOG_WARN("Creating more window surfaces after the first will currently only work if all windows are compatible with the same device. Proceed with caution.");
     FL_ASSERT(Instance::CheckDeviceSuitability(create_info.instance->physical_device, surface, create_info.window_handle));
   }
+  device = create_info.instance->device;
   
   FL_LOG_TRACE("Vulkan WindowSurface created");
 

@@ -49,6 +49,13 @@ set(FRACTAL_SRC_FRACTAL_BASE_SURFACE_FILES
 )
 source_group("fractal/base/surface" FILES ${FRACTAL_SRC_FRACTAL_BASE_SURFACE_FILES})
 
+set(FRACTAL_SRC_FRACTAL_BASE_RENDER_PASS_FILES
+  src/fractal/base/render_pass/render_pass_create_info.hpp
+  src/fractal/base/render_pass/render_pass_begin_op.hpp
+  src/fractal/base/render_pass/render_pass_end_op.hpp
+)
+source_group("fractal/base/render_pass" FILES ${FRACTAL_SRC_FRACTAL_BASE_RENDER_PASS_FILES})
+
 set(FRACTAL_SRC_FRACTAL_BASE_SHADER_FILES
   src/fractal/base/shader/shader_create_info.hpp
 )
@@ -65,6 +72,7 @@ set(FRACTAL_BASE_FILES
   ${FRACTAL_SRC_FRACTAL_BASE_HELPERS_FILES}
   ${FRACTAL_SRC_FRACTAL_BASE_INSTANCE_FILES}
   ${FRACTAL_SRC_FRACTAL_BASE_SURFACE_FILES}
+  ${FRACTAL_SRC_FRACTAL_BASE_RENDER_PASS_FILES}
   ${FRACTAL_SRC_FRACTAL_BASE_SHADER_FILES}
 )
 
